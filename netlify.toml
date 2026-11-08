@@ -1,0 +1,128 @@
+[build]
+  command = "npm run design:build"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["data/**", "public/build/**"]
+
+# Cache immutable build assets
+[[headers]]
+  for = "/build/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# All API requests go to the serverless function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server/api/:splat"
+  status = 200
+  force = true
+
+# HTML page routes (these don't have a physical file in public/)
+# so they MUST go through the Express function.
+# force = false means Netlify checks for a static file first.
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/server/"
+  status = 200
+
+[[redirects]]
+  from = "/shop"
+  to = "/.netlify/functions/server/shop"
+  status = 200
+
+[[redirects]]
+  from = "/product/*"
+  to = "/.netlify/functions/server/product/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/budget"
+  to = "/.netlify/functions/server/budget"
+  status = 200
+
+[[redirects]]
+  from = "/premium"
+  to = "/.netlify/functions/server/premium"
+  status = 200
+
+[[redirects]]
+  from = "/branded"
+  to = "/.netlify/functions/server/branded"
+  status = 200
+
+[[redirects]]
+  from = "/checkout"
+  to = "/.netlify/functions/server/checkout"
+  status = 200
+
+[[redirects]]
+  from = "/cart"
+  to = "/.netlify/functions/server/cart"
+  status = 200
+
+[[redirects]]
+  from = "/tracking"
+  to = "/.netlify/functions/server/tracking"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/.netlify/functions/server/admin"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/.netlify/functions/server/about"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/.netlify/functions/server/contact"
+  status = 200
+
+[[redirects]]
+  from = "/shipping"
+  to = "/.netlify/functions/server/shipping"
+  status = 200
+
+[[redirects]]
+  from = "/returns"
+  to = "/.netlify/functions/server/returns"
+  status = 200
+
+[[redirects]]
+  from = "/warranty"
+  to = "/.netlify/functions/server/warranty"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/.netlify/functions/server/privacy"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/.netlify/functions/server/terms"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/.netlify/functions/server/faq"
+  status = 200
+
+[[redirects]]
+  from = "/testimonials"
+  to = "/.netlify/functions/server/testimonials"
+  status = 200
+
+[[redirects]]
+  from = "/newsletter"
+  to = "/.netlify/functions/server/newsletter"
+  status = 200

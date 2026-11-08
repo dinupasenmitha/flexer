@@ -375,7 +375,20 @@ router.put('/:id', requireAdmin, (req, res) => {
       `);
       variants.forEach((v, idx) => {
         const vSku = v.sku || `${existing.sku}-V${idx + 1}`;
-        vStmt.run(Number(id), vSku, v.color_name || 'Standard', v.color_hex || '#000000', v.image || primary_image || existing.primary_image, v.stock_quantity ?? 0, v.is_available === false || v.is_available === 0 ? 0 : 1);
+        // Check for SKU collision with other products
+        const conflict = db.prepare('SELECT product_id FROM product_variants WHERE sku = ?').get(vSku);
+        if (conflict && conflict.product_id !== Number(id)) {
+          throw new Error('Duplicate variant SKU across products');
+        }
+        vStmt.run(
+          Number(id),
+          vSku,
+          v.color_name || 'Standard',
+          v.color_hex || '#000000',
+          v.image || primary_image || existing.primary_image,
+          v.stock_quantity ?? 0,
+          v.is_available === false || v.is_available === 0 ? 0 : 1
+        );
       });
     }
 
