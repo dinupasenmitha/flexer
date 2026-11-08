@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title desc">
+  <title id="title">FLEXER microfiber lens cloth</title>
+  <desc id="desc">A softly folded pearl microfiber cloth with a fine stitched champagne edge.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f2e9"/><stop offset="1" stop-color="#e8ddcf"/></linearGradient>
+    <linearGradient id="fabric" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fffefa"/><stop offset=".5" stop-color="#e9e2d8"/><stop offset="1" stop-color="#cfc3b2"/></linearGradient>
+    <filter id="shadow" x="-.2" y="-.3" width="1.4" height="1.7"><feGaussianBlur stdDeviation="17"/></filter>
+  </defs>
+  <rect width="720" height="460" fill="url(#bg)"/>
+  <ellipse cx="360" cy="334" rx="230" ry="39" fill="#62503e" opacity=".18" filter="url(#shadow)"/>
+  <path d="M185 122c45-19 87-6 128 18l216 126c18 11 25 33 14 51l-25 41c-10 17-32 23-49 13L213 229c-38-22-57-60-48-91 3-8 10-13 20-16z" fill="url(#fabric)" stroke="#c4a77d" stroke-width="2.5"/>
+  <path d="M188 141c44-20 79 3 120 26l199 118" fill="none" stroke="#fffefa" stroke-width="8" stroke-linecap="round" opacity=".78"/>
+  <path d="M210 220c49 9 96-11 123-48l37-51" fill="none" stroke="#d2c3ae" stroke-width="3" opacity=".75"/>
+  <path d="M235 239c39-2 72-20 99-49l34-37" fill="none" stroke="#fffdf8" stroke-width="3" opacity=".88"/>
+  <path d="M213 223c42 25 110 63 221 127" fill="none" stroke="#b89460" stroke-width="1.5" stroke-dasharray="3 7" opacity=".78"/>
+  <text x="382" y="250" fill="#9d825c" font-family="Georgia,serif" font-size="17" letter-spacing="4" transform="rotate(31 382 250)">FLEXER</text>
+  <path d="M76 385h568" stroke="#b99c72" stroke-opacity=".25"/>
+</svg>

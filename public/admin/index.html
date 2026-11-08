@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — FLEXER Operations</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/admin/admin.css?v=20261027-2" />
+</head>
+<body>
+
+  <!-- 1. LOGIN SCREEN -->
+  <div class="admin-login-screen" id="admin-login-screen">
+    <div class="admin-login-box">
+      <div style="font-family:var(--font-mono);font-size:1.4rem;font-weight:700;letter-spacing:0.2em;color:var(--text-main);margin-bottom:6px">FLEXER</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:24px">Merchant Operations Access</p>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-username">Username</label>
+          <input type="text" id="login-username" class="form-input" placeholder="admin" required autocomplete="username" />
+        </div>
+        <div class="form-group" style="margin-bottom:24px">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <div id="login-error" class="hidden" style="color:#ff6b6b;font-size:0.8rem;margin-bottom:16px;padding:8px 12px;background:rgba(255,91,91,0.1);border-radius:2px"></div>
+        <button type="submit" class="btn btn-primary" id="login-submit-btn" style="width:100%">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. MAIN DASHBOARD VIEW -->
+  <div class="admin-layout hidden" id="admin-dashboard">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div style="font-family:var(--font-mono);font-size:1.25rem;font-weight:700;letter-spacing:0.18em">FLEXER</div>
+        <div style="font-size:0.7rem;color:var(--accent-gold);letter-spacing:0.08em;margin-top:2px">COMMAND CENTER</div>
+      </div>
+
+      <nav class="admin-sidebar-nav">
+        <button class="admin-nav-item active" data-tab="tab-dashboard">
+          <span>◈</span> Dashboard
+        </button>
+        <button class="admin-nav-item" data-tab="tab-orders">
+          <span>◎</span> Orders
+          <span class="badge-status badge-warning" id="pending-verification-badge" style="display:none;margin-left:auto">0</span>
+        </button>
+        <button class="admin-nav-item" data-tab="tab-products">
+          <span>◉</span> Products
+        </button>
+        <button class="admin-nav-item" data-tab="tab-settings">
+          <span>⚙</span> Business Settings
+        </button>
+        <button class="admin-nav-item" data-tab="tab-messages">
+          <span>✉</span> Inquiries & Subs
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div>
+          <div style="font-size:0.8rem;font-weight:600" id="admin-username-display">Admin</div>
+          <a href="/" target="_blank" style="font-size:0.7rem;color:var(--text-subtle)">View Live Store ↗</a>
+        </div>
+        <button class="cart-item-remove" id="admin-logout-btn" style="font-size:0.75rem">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEW -->
+    <div class="admin-main-view">
+      <header class="admin-topbar">
+        <h2 style="font-family:var(--font-mono);font-size:1.1rem;letter-spacing:0.06em" id="admin-topbar-title">Dashboard</h2>
+        <div style="display:flex;gap:12px">
+          <button class="btn btn-primary" style="padding:6px 16px;font-size:0.75rem" onclick="openAddProductModal()">+ Add Product</button>
+        </div>
+      </header>
+
+      <div class="admin-content-area">
+
+        <!-- TAB: DASHBOARD OVERVIEW -->
+        <div class="admin-tab-pane active" id="tab-dashboard">
+          <div class="admin-stats-grid">
+            <div class="admin-stat-card highlight">
+              <div class="admin-stat-label">Verified Collected Revenue</div>
+              <div class="admin-stat-val" id="stat-verified-revenue" style="color:var(--accent-gold)">LKR 0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">Strictly verified funds in bank account</div>
+            </div>
+
+            <div class="admin-stat-card">
+              <div class="admin-stat-label">Total Orders Placed</div>
+              <div class="admin-stat-val" id="stat-total-orders">0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">All-time order volume</div>
+            </div>
+
+            <div class="admin-stat-card">
+              <div class="admin-stat-label">Awaiting Payment Verification</div>
+              <div class="admin-stat-val" id="stat-awaiting-payment" style="color:#e5b358">0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">Bank Transfer / Koko orders pending review</div>
+            </div>
+
+            <div class="admin-stat-card">
+              <div class="admin-stat-label">Cash on Delivery Due</div>
+              <div class="admin-stat-val" id="stat-cod-due">0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">Collected upon courier handover</div>
+            </div>
+
+            <div class="admin-stat-card">
+              <div class="admin-stat-label">Active Eyewear Frames</div>
+              <div class="admin-stat-val" id="stat-active-products">0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">Visible on storefront catalogue</div>
+            </div>
+
+            <div class="admin-stat-card">
+              <div class="admin-stat-label">Newsletter Subscribers</div>
+              <div class="admin-stat-val" id="stat-subscribers">0</div>
+              <div style="font-size:0.72rem;color:var(--text-subtle);margin-top:6px">Drop notification list</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ORDERS -->
+        <div class="admin-tab-pane" id="tab-orders">
+          <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+            <button class="btn btn-secondary admin-filter-btn active" data-status="All" onclick="filterOrdersByStatus('All')" style="padding:6px 12px;font-size:0.75rem">All</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="new" onclick="filterOrdersByStatus('new')" style="padding:6px 12px;font-size:0.75rem">New</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="confirmed" onclick="filterOrdersByStatus('confirmed')" style="padding:6px 12px;font-size:0.75rem">Confirmed</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="processing" onclick="filterOrdersByStatus('processing')" style="padding:6px 12px;font-size:0.75rem">Processing</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="dispatched" onclick="filterOrdersByStatus('dispatched')" style="padding:6px 12px;font-size:0.75rem">Dispatched</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="delivered" onclick="filterOrdersByStatus('delivered')" style="padding:6px 12px;font-size:0.75rem">Delivered</button>
+            <button class="btn btn-secondary admin-filter-btn" data-status="cancelled" onclick="filterOrdersByStatus('cancelled')" style="padding:6px 12px;font-size:0.75rem">Cancelled</button>
+          </div>
+
+          <div class="admin-table-wrapper" id="orders-table-wrap"></div>
+        </div>
+
+        <!-- TAB: PRODUCTS -->
+        <div class="admin-tab-pane" id="tab-products">
+          <div class="admin-table-wrapper" id="products-table-wrap"></div>
+        </div>
+
+        <!-- TAB: BUSINESS SETTINGS -->
+        <div class="admin-tab-pane" id="tab-settings">
+          <div style="max-width:760px;background:var(--admin-card);border:1px solid var(--admin-border);border-radius:4px;padding:32px">
+            <h3 style="font-family:var(--font-mono);font-size:1.1rem;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--admin-border)">Store & Payment Configuration</h3>
+
+            <form id="settings-form">
+              <h4 style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent-gold);text-transform:uppercase;margin-bottom:14px">Official Bank Account Information</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="s-bank-name">Bank Name</label>
+                  <input type="text" id="s-bank-name" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="s-bank-branch">Branch</label>
+                  <input type="text" id="s-bank-branch" class="form-input" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="s-bank-holder">Account Holder Name</label>
+                  <input type="text" id="s-bank-holder" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="s-bank-acc">Account Number</label>
+                  <input type="text" id="s-bank-acc" class="form-input" />
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:24px">
+                <label class="form-label" for="s-bank-instr">Payment Instructions Displayed to Customer</label>
+                <textarea id="s-bank-instr" class="form-textarea"></textarea>
+              </div>
+
+              <h4 style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent-gold);text-transform:uppercase;margin-bottom:14px;padding-top:16px;border-top:1px solid var(--admin-border)">WhatsApp & Communication</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="s-wa-number">Official WhatsApp Business Number (e.g. 94775580968)</label>
+                  <input type="text" id="s-wa-number" class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="s-wa-community">Official WhatsApp Group Invite Link</label>
+                  <input type="text" id="s-wa-community" class="form-input" />
+                </div>
+              </div>
+
+              <h4 style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent-gold);text-transform:uppercase;margin-bottom:14px;padding-top:16px;border-top:1px solid var(--admin-border)">Logistics & Announcement</h4>
+              <div class="form-group">
+                <label class="form-label" for="s-delivery-fee">Islandwide Delivery Fee in LKR (0 = Free Delivery)</label>
+                <input type="number" id="s-delivery-fee" class="form-input" />
+              </div>
+              <div class="form-group" style="margin-bottom:28px">
+                <label class="form-label" for="s-announcement">Top Announcement Bar Text</label>
+                <input type="text" id="s-announcement" class="form-input" />
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%">Save Business Settings</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB: MESSAGES & SUBS -->
+        <div class="admin-tab-pane" id="tab-messages">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+            <div style="background:var(--admin-card);border:1px solid var(--admin-border);border-radius:4px;padding:24px">
+              <h3 style="font-family:var(--font-mono);font-size:0.95rem;margin-bottom:16px;text-transform:uppercase">Contact Inquiries</h3>
+              <div id="contacts-list-wrap"></div>
+            </div>
+
+            <div style="background:var(--admin-card);border:1px solid var(--admin-border);border-radius:4px;padding:24px">
+              <h3 style="font-family:var(--font-mono);font-size:0.95rem;margin-bottom:16px;text-transform:uppercase">Newsletter Subscribers</h3>
+              <div id="subscribers-list-wrap" style="display:flex;flex-direction:column;gap:8px"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER MODAL -->
+  <div class="admin-modal-backdrop hidden" id="order-modal">
+    <div class="admin-modal-box">
+      <div style="display:flex;justify-content:flex-end">
+        <button class="modal-close-trigger cart-item-remove" style="font-size:1.2rem">✕</button>
+      </div>
+      <div id="order-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- PRODUCT EDIT/ADD MODAL -->
+  <div class="admin-modal-backdrop hidden" id="product-modal">
+    <div class="admin-modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--admin-border)">
+        <h3 id="product-modal-title" style="font-family:var(--font-mono);font-size:1.1rem">Add Product</h3>
+        <button class="modal-close-trigger cart-item-remove" style="font-size:1.2rem">✕</button>
+      </div>
+
+      <form id="product-form">
+        <input type="hidden" id="p-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="p-sku">SKU</label>
+            <input type="text" id="p-sku" class="form-input" placeholder="FLX-P-003" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-name">Product Name</label>
+            <input type="text" id="p-name" class="form-input" placeholder="S4 HORIZON" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="p-category">Range</label>
+            <select id="p-category" class="form-select">
+              <option value="budget">Budget (Everyday)</option>
+              <option value="premium">Premium (Italian Acetate)</option>
+              <option value="branded">Branded (Collector's)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-type">Product Type</label>
+            <select id="p-type" class="form-select">
+              <option value="sunglasses">Sunglasses (UV400)</option>
+              <option value="optical">Optical Frame (Prescription)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="p-price">Selling Price in LKR</label>
+            <input type="number" id="p-price" class="form-input" placeholder="7950" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-original-price">Original Price (Discount strike-through)</label>
+            <input type="number" id="p-original-price" class="form-input" placeholder="9500" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-description">Description</label>
+          <textarea id="p-description" class="form-textarea" placeholder="Silhouette story and details..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="p-materials">Materials</label>
+            <input type="text" id="p-materials" class="form-input" placeholder="Italian Cellulose Acetate, 5-barrel hinges" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-lens">Lens Specifications</label>
+            <input type="text" id="p-lens" class="form-input" placeholder="Polarized UV400 Category 3 TAC 1.1mm" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="p-dimensions">Dimensions</label>
+          <input type="text" id="p-dimensions" class="form-input" placeholder="Lens: 52mm | Bridge: 20mm | Temple: 145mm" />
+        </div>
+
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.85rem">
+            <input type="checkbox" id="p-active" checked />
+            <span>Active (Visible on public storefront)</span>
+          </label>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px">
+          <button type="button" class="btn btn-secondary modal-close-trigger">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-toast"></div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

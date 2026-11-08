@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout &mdash; FLEXER Eyewear</title>
+  <meta name="description" content="Secure checkout for FLEXER premium sunglasses and optical frames. Bank Transfer, Cash on Delivery, and Koko." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=20261027-4" />
+  <script src="/js/motion.js?v=20261027-4" defer></script>
+  <style>
+    .co-header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+    }
+    .co-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .co-steps-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .step-indicator.active {
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+    .co-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 48px;
+      padding: 48px 0 96px;
+      align-items: flex-start;
+    }
+    .co-form-panel {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 36px 32px;
+    }
+    .co-step-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-xs);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+    .form-textarea {
+      height: 80px;
+      padding: 10px 14px;
+      resize: vertical;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent-gold);
+    }
+    .form-input.error, .form-select.error {
+      border-color: #ff5b5b;
+    }
+    .form-error-msg {
+      font-size: 0.72rem;
+      color: #ff6b6b;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* Payment Cards */
+    .payment-cards-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .payment-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .payment-card.active, .payment-card:hover {
+      border-color: var(--accent-gold);
+      background-color: rgba(197, 160, 89, 0.04);
+    }
+    .payment-card input[type="radio"] {
+      accent-color: var(--accent-gold);
+      width: 18px;
+      height: 18px;
+    }
+    .payment-card-body {
+      flex-grow: 1;
+    }
+    .payment-card-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .payment-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Summary Sidebar */
+    .co-summary-sidebar {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 32px 28px;
+      position: sticky;
+      top: 100px;
+    }
+    @media (max-width: 900px) {
+      .co-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .co-summary-sidebar {
+        position: static;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/editorial.css?v=20261027-4" />
+</head>
+<body>
+
+  <!-- HE&middot;DER -->
+  <header class="co-header">
+    <div class="container co-nav">
+      <a href="/" class="nav-logo" style="font-size:1.3rem">FLEXER</a>
+      <div class="co-steps-indicator">
+        <span class="step-indicator active" data-step="details">1. Details</span>
+        <span>›</span>
+        <span class="step-indicator" data-step="payment">2. Payment</span>
+        <span>›</span>
+        <span class="step-indicator" data-step="confirm">3. Confirmation</span>
+      </div>
+      <a href="/shop" style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">← Return to Store</a>
+    </div>
+  </header>
+
+  <div class="container co-layout">
+    <!-- LEFT: FORM &middot;RE&middot; -->
+    <div class="co-form-panel">
+
+      <!-- STEP 1: CUSTOMER & DELIVERY DET&middot;ILS -->
+      <section id="step-details">
+        <h2 class="co-step-title">Customer & Delivery Details</h2>
+        <form id="details-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="f-name">Full Name <span style="color:var(--accent-gold)">*</span></label>
+            <input type="text" id="f-name" class="form-input" placeholder="e.g. Dinupa Perera" required />
+            <span class="form-error-msg hidden" id="err-name"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-phone">Phone Number <span style="color:var(--accent-gold)">*</span></label>
+              <input type="tel" id="f-phone" class="form-input" placeholder="077 123 4567" required />
+              <span class="form-error-msg hidden" id="err-phone"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="f-whatsapp">WhatsApp Number</label>
+              <input type="tel" id="f-whatsapp" class="form-input" placeholder="077 123 4567" />
+              <label style="font-size:0.75rem;color:var(--text-muted);display:flex;align-items:center;gap:6px;cursor:pointer;margin-top:4px">
+                <input type="checkbox" id="same-as-phone" checked />
+                <span>Same as phone number</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-email">Email Address (Optional)</label>
+            <input type="email" id="f-email" class="form-input" placeholder="you@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-address">Delivery Address <span style="color:var(--accent-gold)">*</span></label>
+            <input type="text" id="f-address" class="form-input" placeholder="House / Building No, Street Name" required />
+            <span class="form-error-msg hidden" id="err-address"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-city">City / Town <span style="color:var(--accent-gold)">*</span></label>
+              <input type="text" id="f-city" class="form-input" placeholder="e.g. Kollupitiya" required />
+              <span class="form-error-msg hidden" id="err-city"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="f-district">District <span style="color:var(--accent-gold)">*</span></label>
+              <select id="f-district" class="form-select" required>
+                <option value="">Select District</option>
+                <option value="Colombo">Colombo</option>
+                <option value="Gampaha">Gampaha</option>
+                <option value="Kalutara">Kalutara</option>
+                <option value="Kandy">Kandy</option>
+                <option value="Matale">Matale</option>
+                <option value="Nuwara Eliya">Nuwara Eliya</option>
+                <option value="Galle">Galle</option>
+                <option value="Matara">Matara</option>
+                <option value="Hambantota">Hambantota</option>
+                <option value="Jaffna">Jaffna</option>
+                <option value="Kilinochchi">Kilinochchi</option>
+                <option value="Mannar">Mannar</option>
+                <option value="Vavuniya">Vavuniya</option>
+                <option value="Mullaitivu">Mullaitivu</option>
+                <option value="Batticaloa">Batticaloa</option>
+                <option value="Ampara">Ampara</option>
+                <option value="Trincomalee">Trincomalee</option>
+                <option value="Kurunegala">Kurunegala</option>
+                <option value="Puttalam">Puttalam</option>
+                <option value="Anuradhapura">Anuradhapura</option>
+                <option value="Polonnaruwa">Polonnaruwa</option>
+                <option value="Badulla">Badulla</option>
+                <option value="Monaragala">Monaragala</option>
+                <option value="Ratnapura">Ratnapura</option>
+                <option value="Kegalle">Kegalle</option>
+              </select>
+              <span class="form-error-msg hidden" id="err-district"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-postal">Postal Code (Optional)</label>
+            <input type="text" id="f-postal" class="form-input" placeholder="e.g. 00300" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-notes">Delivery Instructions (Optional)</label>
+            <textarea id="f-notes" class="form-textarea" placeholder="Landmarks or delivery time preferences..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px">
+            Continue to Payment Selection  
+          </button>
+        </form>
+      </section>
+
+      <!-- STEP 2: P&middot;YMENT METHOD -->
+      <section id="step-payment" class="hidden">
+        <h2 class="co-step-title">Select Payment Method</h2>
+
+        <div class="payment-cards-group">
+          <!-- 1. Bank Transfer -->
+          <label class="payment-card active">
+            <input type="radio" name="payment_method" value="bank_transfer" checked />
+            <div class="payment-card-body">
+              <div class="payment-card-title">Bank Transfer (Manual Online Transfer)</div>
+              <div class="payment-card-desc">Transfer to our official Commercial Bank account and share your slip via WhatsApp.</div>
+            </div>
+          </label>
+
+          <!-- 2. Cash on Delivery -->
+          <label class="payment-card">
+            <input type="radio" name="payment_method" value="cod" />
+            <div class="payment-card-body">
+              <div class="payment-card-title">Cash on Delivery (COD)</div>
+              <div class="payment-card-desc">Pay cash directly to the courier when your package arrives at your doorstep.</div>
+            </div>
+          </label>
+
+          <!-- 3. Koko -->
+          <label class="payment-card">
+            <input type="radio" name="payment_method" value="koko" />
+            <div class="payment-card-body">
+              <div class="payment-card-title">Koko &mdash; Pay in 3 Installments (0% Interest)</div>
+              <div class="payment-card-desc">Split your order into 3 monthly installments. Link sent upon order confirmation.</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Bank Details Panel -->
+        <div id="bank-details-panel" style="background:var(--bg-main);border:1px solid var(--border-subtle);border-radius:4px;padding:20px;margin-bottom:24px">
+          <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--accent-gold);text-transform:uppercase;margin-bottom:8px">
+            Payment Slip Handling (Strict Privacy)
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px">
+            You can select your payment slip from your device now. In compliance with strict customer financial privacy, slips are <strong>never uploaded to our server</strong>. You will share it directly with FLEXER on WhatsApp.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="local-slip-input">Optional: Choose Slip File From Device (JPG, PNG, PDF)</label>
+            <input type="file" id="local-slip-input" accept="image/*,application/pdf" style="font-size:0.82rem;color:var(--text-muted)" />
+            <div id="local-slip-status" style="margin-top:6px"></div>
+          </div>
+        </div>
+
+        <!-- COD Info Panel -->
+        <div id="cod-info-panel" class="hidden" style="background:var(--bg-main);border:1px solid var(--border-subtle);border-radius:4px;padding:20px;margin-bottom:24px">
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5">
+            Please keep the exact cash amount ready at the time of delivery. You will receive an SMS / call from the courier before dispatch.
+          </p>
+        </div>
+
+        <!-- Koko Info Panel -->
+        <div id="koko-info-panel" class="hidden" style="background:var(--bg-main);border:1px solid var(--border-subtle);border-radius:4px;padding:20px;margin-bottom:24px">
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5">
+            After placing your order, FLEXER support will deliver your official Koko 3-installment link directly to your mobile number.
+          </p>
+        </div>
+
+        <div style="display:flex;gap:14px">
+          <button type="button" class="btn btn-secondary" id="btn-back-details" style="flex:1">← Back</button>
+          <button type="button" class="btn btn-primary" id="btn-place-order" style="flex:2">Place Order  </button>
+        </div>
+      </section>
+
+      <!-- STEP 3: ORDER CONFIRM&middot;TION -->
+      <section id="step-confirm" class="hidden">
+        <div style="text-align:center;padding:20px 0 32px">
+          <div style="display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:rgba(115,179,151,0.15);color:#73b397;margin-bottom:16px;border:1px solid rgba(115,179,151,0.3)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <h2 style="font-family:var(--font-serif);font-size:2.4rem;font-weight:300;margin-bottom:8px">Order Recorded!</h2>
+          <p style="color:var(--text-muted);font-size:0.95rem">Thank you. Your order record has been safely saved in our database.</p>
+          <div style="margin-top:16px;display:inline-block;padding:8px 18px;background:var(--bg-main);border:1px solid var(--accent-gold-border);border-radius:4px">
+            <span style="font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--accent-gold)" id="conf-order-ref">FLX-2026-XXXXXX</span>
+          </div>
+        </div>
+
+        <div id="conf-details"></div>
+        <div id="conf-action-area"></div>
+
+        <div style="text-align:center;margin-top:32px">
+          <a href="/shop" class="footer-link">Continue Browsing Collection  </a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMM&middot;RY SIDEB&middot;R -->
+    <aside class="co-summary-sidebar">
+      <h3 style="font-family:var(--font-mono);font-size:0.95rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border-subtle)">
+        Order Summary
+      </h3>
+
+      <div id="co-summary-items">
+        <!-- Rendered by checkout.js -->
+      </div>
+
+      <div style="padding-top:16px;border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-muted)">
+          <span>Subtotal</span>
+          <span id="co-summary-subtotal">LKR 0</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--text-muted)">
+          <span>Islandwide Delivery</span>
+          <span style="color:var(--accent-gold);font-weight:600" id="co-summary-delivery">FREE</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:1.15rem;font-weight:700;padding-top:12px;margin-top:6px;border-top:1px solid var(--border-subtle)">
+          <span>Total Payable</span>
+          <span id="co-summary-total" style="color:var(--accent-gold)">LKR 0</span>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;padding:16px;background:var(--bg-main);border-radius:4px;border:1px solid var(--border-subtle);font-size:0.75rem;color:var(--text-subtle);line-height:1.5">
+        🔒 <strong>FLEXER Guarantee:</strong> 100% authentic eyewear, UV400 certified optics, and optometry-backed alignment inspection before dispatch.
+      </div>
+    </aside>
+  </div>
+
+  <!-- FLO&middot;TING WH&middot;TS&middot;PP BUTTON -->
+  <a href="https://wa.me/94775580968" target="_blank" rel="noopener" class="floating-whatsapp" aria-label="WhatsApp Support">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <script src="/js/store.js"></script>
+  <script src="/js/checkout.js"></script>
+</body>
+</html>

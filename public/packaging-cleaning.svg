@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title desc">
+  <title id="title">FLEXER anti-fog lens care kit</title>
+  <desc id="desc">A refined lens-care spray and compact cleaning cloth arranged on a warm neutral background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8f4ec"/><stop offset="1" stop-color="#e8ded0"/></linearGradient>
+    <linearGradient id="bottle" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fdfbf6"/><stop offset=".55" stop-color="#e6d6bd"/><stop offset="1" stop-color="#c8ad85"/></linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8c4a3"/><stop offset="1" stop-color="#9c7b4e"/></linearGradient>
+    <filter id="shadow" x="-.2" y="-.3" width="1.4" height="1.7"><feGaussianBlur stdDeviation="15"/></filter>
+  </defs>
+  <rect width="720" height="460" fill="url(#bg)"/>
+  <ellipse cx="360" cy="345" rx="210" ry="35" fill="#62503e" opacity=".17" filter="url(#shadow)"/>
+  <g transform="rotate(-7 330 235)">
+    <rect x="255" y="134" width="153" height="206" rx="28" fill="url(#bottle)" stroke="#b4986c" stroke-width="2.5"/>
+    <path d="M287 134v-22c0-12 10-22 22-22h45c12 0 22 10 22 22v22" fill="url(#cap)" stroke="#92734b" stroke-width="2"/>
+    <path d="M283 208h97v78h-97z" fill="#fbf8f1" opacity=".72"/>
+    <text x="331" y="238" text-anchor="middle" fill="#68553c" font-family="Georgia,serif" font-size="15" letter-spacing="3">FLEXER</text>
+    <text x="331" y="259" text-anchor="middle" fill="#98794e" font-family="Arial,sans-serif" font-size="9" letter-spacing="2">LENS CARE</text>
+    <path d="M270 156c27 10 94 10 123 0" fill="none" stroke="#fffefa" stroke-width="4" opacity=".75"/>
+  </g>
+  <path d="M436 265l85-55 72 47-87 59z" fill="#f5f0e7" stroke="#b99b70" stroke-width="2"/>
+  <path d="M453 266l67-42M472 279l66-42M489 291l67-42" stroke="#d4c4ac" stroke-width="2" opacity=".85"/>
+  <path d="M76 385h568" stroke="#b99c72" stroke-opacity=".25"/>
+</svg>

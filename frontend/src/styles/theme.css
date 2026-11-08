@@ -1,0 +1,33 @@
+/* ============================================================
+   FLEXER EYEWEAR — Black, Gold, White Luxury Palette Standard
+   ============================================================ */
+
+:root,
+:root[data-theme="light"],
+html {
+  color-scheme: light;
+  --ivory: #ffffff;
+  --white: #ffffff;
+  --ink: #000000;
+  --ink-soft: #383838;
+  --line: #e8e8e8;
+  --gold: #c5a059;
+  --gold-light: #e8cf8d;
+  --gold-deep: #9a782b;
+  --surface-ink: #000000;
+  --sand: #fafafa;
+  --admin-bg: #f8f8f8;
+  --admin-panel: #ffffff;
+  --admin-line: #e8e8e8;
+  --admin-text: #000000;
+  --admin-muted: #555555;
+  --admin-gold: #c5a059;
+}
+
+/* Ensure no theme-toggle button ever renders */
+.theme-toggle,
+[data-theme-toggle] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

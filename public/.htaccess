@@ -1,0 +1,46 @@
+# ============================================================
+# FLEXER EYEWEAR — Apache .htaccess Configuration
+# Supports clean URLs for static pages and routes API to api.php or Node proxy
+# ============================================================
+
+Options -Indexes
+RewriteEngine On
+
+# Enforce HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Route API endpoints
+RewriteRule ^api/(.*)$ api.php?$1 [QSA,L]
+
+# Clean storefront routes
+RewriteRule ^shop/?$ build/shop.html [L]
+RewriteRule ^product/([^/]+)/?$ build/product.html?slug=$1 [QSA,L]
+RewriteRule ^product/?$ build/product.html [L]
+RewriteRule ^budget/?$ build/shop.html?category=budget [QSA,L]
+RewriteRule ^premium/?$ build/shop.html?category=premium [QSA,L]
+RewriteRule ^branded/?$ build/shop.html?category=branded [QSA,L]
+RewriteRule ^checkout/?$ build/checkout.html [L]
+RewriteRule ^admin/?$ build/admin.html [L]
+
+RewriteRule ^(about|contact|shipping|returns|warranty|privacy|terms|faq|testimonials|newsletter)/?$ build/content.html [L]
+
+# Custom 404
+ErrorDocument 404 /404.html
+
+# Security & Cache Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Cache static assets
+  <FilesMatch "\.(css|js|png|jpg|jpeg|svg|webp|avif|woff2|mp4)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+  <FilesMatch "\.[a-f0-9]{8,}\.(css|js)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+</IfModule>

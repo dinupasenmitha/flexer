@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>FLEXER — Redefine Your Vision</title>
+  <meta name="description" content="FLEXER premium sunglasses. Don't just wear, FLEX. Shop our collection of handcrafted luxury eyewear. UV400 protection. Free worldwide shipping." />
+  <meta property="og:title" content="FLEXER — Redefine Your Vision" />
+  <meta property="og:description" content="Premium handcrafted sunglasses. Don't just wear, FLEX. Three silhouettes. Infinite style." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/style.css?v=3.0" />
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar" id="announcement-bar">
+    <div class="announcement-track">
+      <span>LAUNCH COLLECTION — DROP 01 NOW LIVE</span>
+      <span class="dot">✦</span>
+      <span>UV400 PROTECTION ON ALL FRAMES</span>
+      <span class="dot">✦</span>
+      <span>FREE WORLDWIDE SHIPPING</span>
+      <span class="dot">✦</span>
+      <span>USE CODE <strong>FLEX10</strong> FOR 10% OFF</span>
+      <span class="dot">✦</span>
+      <span>LAUNCH COLLECTION — DROP 01 NOW LIVE</span>
+      <span class="dot">✦</span>
+      <span>UV400 PROTECTION ON ALL FRAMES</span>
+      <span class="dot">✦</span>
+      <span>FREE WORLDWIDE SHIPPING</span>
+      <span class="dot">✦</span>
+      <span>USE CODE <strong>FLEX10</strong> FOR 10% OFF</span>
+      <span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-mobile-left">
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="nav-left">
+        <a href="#shop" class="nav-link" id="nav-shop">Shop</a>
+        <a href="#about" class="nav-link" id="nav-about">About</a>
+      </div>
+      <a href="/" class="nav-logo" id="nav-logo-link">FLEXER</a>
+      <div class="nav-right">
+        <a href="#contact" class="nav-link" id="nav-contact">Contact</a>
+        <button class="cart-btn" id="cart-btn" aria-label="Open cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#shop" class="mobile-nav-main-link">
+        <span>Shop All Products</span>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <div class="mobile-nav-section-title">CURATED RANGES</div>
+
+      <a href="/budget" class="mobile-range-card tier-budget">
+        <div class="range-card-accent"></div>
+        <div class="range-card-body">
+          <div class="range-card-top">
+            <span class="range-card-num">01</span>
+            <span class="range-card-title">BUDGET RANGE</span>
+          </div>
+          <div class="range-card-bottom">
+            <span class="range-card-desc">Everyday Essentials</span>
+            <span class="range-card-price">LKR 1,690 – 4,690</span>
+          </div>
+        </div>
+        <span class="range-card-arrow">→</span>
+      </a>
+
+      <a href="/premium" class="mobile-range-card tier-premium">
+        <div class="range-card-accent"></div>
+        <div class="range-card-body">
+          <div class="range-card-top">
+            <span class="range-card-num">02</span>
+            <span class="range-card-title">PREMIUM RANGE</span>
+          </div>
+          <div class="range-card-bottom">
+            <span class="range-card-desc">Italian Acetate &amp; Polarized</span>
+            <span class="range-card-price">LKR 7,560 – 9,990</span>
+          </div>
+        </div>
+        <span class="range-card-arrow">→</span>
+      </a>
+
+      <a href="/branded" class="mobile-range-card tier-branded">
+        <div class="range-card-accent"></div>
+        <div class="range-card-body">
+          <div class="range-card-top">
+            <span class="range-card-num">03</span>
+            <span class="range-card-title">BRANDED RANGE</span>
+          </div>
+          <div class="range-card-bottom">
+            <span class="range-card-desc">Collector's Edition</span>
+            <span class="range-card-price">LKR 23,000+</span>
+          </div>
+        </div>
+        <span class="range-card-arrow">→</span>
+      </a>
+
+      <div class="mobile-nav-divider"></div>
+
+      <a href="#about" class="mobile-nav-sub-link">About FLEXER</a>
+      <a href="#contact" class="mobile-nav-sub-link">Contact Us</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <video autoplay loop muted playsinline class="hero-video" poster="hero_woman.png">
+        <source src="hero-video.mp4" type="video/mp4" />
+        <img src="hero_woman.png" alt="FLEXER luxury woman wearing sunglasses model" class="hero-img" id="hero-img" />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-gradient"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" id="hero-eyebrow">DROP 01 — NOW LIVE</p>
+      <h1 class="hero-title" id="hero-title">
+        <span class="line">DON'T JUST</span>
+        <span class="line italic">WEAR,</span>
+        <span class="line">FLEX</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub">Three silhouettes. One philosophy. Engineered for the bold.</p>
+      <div class="hero-cta-group">
+        <a href="#shop" class="btn btn-primary" id="hero-cta-shop">Shop the Drop</a>
+        <a href="#about" class="btn btn-ghost" id="hero-cta-learn">Our Story ↓</a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" id="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+    <div class="hero-badges">
+      <div class="badge"><span>UV400</span><small>Protection</small></div>
+      <div class="badge"><span>6 Month</span><small>Warranty</small></div>
+      <div class="badge"><span>Free</span><small>Shipping</small></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>BUDGET</span><span class="sep">✦</span>
+      <span>PREMIUM</span><span class="sep">✦</span>
+      <span>BRANDED</span><span class="sep">✦</span>
+      <span>FLEXER EYEWEAR</span><span class="sep">✦</span>
+      <span>DROP 01</span><span class="sep">✦</span>
+      <span>UV400</span><span class="sep">✦</span>
+      <span>BUDGET</span><span class="sep">✦</span>
+      <span>PREMIUM</span><span class="sep">✦</span>
+      <span>BRANDED</span><span class="sep">✦</span>
+      <span>FLEXER EYEWEAR</span><span class="sep">✦</span>
+      <span>DROP 01</span><span class="sep">✦</span>
+      <span>UV400</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- SHOP SECTION - 3 TIERS -->
+  <section class="shop" id="shop">
+    <div class="container">
+      <div class="section-header" style="text-align:center">
+        <p class="section-eyebrow">The Collection</p>
+        <h2 class="section-title">CURATED RANGES</h2>
+        <p class="section-sub" style="margin:0 auto">Three distinct tiers. Engineered for style, optical clarity &amp; lasting value.</p>
+      </div>
+
+      <!-- BUDGET TIER -->
+      <div class="tier-card tier-card-hero tier-budget" id="section-budget">
+        <div class="tier-hero-grid">
+          <div class="tier-hero-info">
+            <div class="tier-card-top-bar">
+              <span class="tier-badge tier-badge-budget">01 / COLLECTION</span>
+              <span class="tier-price-range" id="tier-budget-range">LKR 1,690 – LKR 4,690</span>
+            </div>
+            <div class="tier-main-heading-group">
+              <h3 class="tier-range-name-xl">BUDGET RANGE</h3>
+              <p class="tier-range-sub-title">Everyday <em>Essentials</em></p>
+            </div>
+            <p class="tier-card-subtitle-lg">Everyday style, solid UV400 protection. Exceptional value crafted for daily wear with complete travel pouch and care kit.</p>
+            <div class="tier-inclusions-strip">
+              <span class="inc-label">INCLUDES:</span>
+              <div class="inc-tags">
+                <span class="inc-tag">Zip Pouch</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Cloth Pouch</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Microfibre Care Cloth</span><span class="inc-dot">·</span>
+                <span class="inc-tag">48h Return Guarantee</span>
+              </div>
+            </div>
+            <div class="tier-hero-cta">
+              <a href="/budget" class="btn btn-primary btn-budget-cta">
+                EXPLORE BUDGET RANGE →
+              </a>
+            </div>
+          </div>
+          <div class="tier-hero-media">
+            <a href="/budget" class="tier-hero-img-wrap">
+              <img src="product_budget_set.png" alt="FLEXER Budget Range Sunglasses Collection" class="tier-hero-img" loading="lazy" />
+              <div class="tier-hero-overlay"></div>
+              <span class="tier-hero-badge">BUDGET COLLECTION</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREMIUM TIER -->
+      <div class="tier-card tier-card-hero tier-premium" id="section-premium">
+        <div class="tier-hero-grid">
+          <div class="tier-hero-info">
+            <div class="tier-card-top-bar">
+              <span class="tier-badge tier-badge-premium">02 / COLLECTION</span>
+              <span class="tier-price-range" id="tier-premium-range">LKR 7,560 – LKR 9,990</span>
+            </div>
+            <div class="tier-main-heading-group">
+              <h3 class="tier-range-name-xl">PREMIUM RANGE</h3>
+              <p class="tier-range-sub-title">Precision <em>Crafted</em></p>
+            </div>
+            <p class="tier-card-subtitle-lg">Hand-finished Italian acetate, polarized optics &amp; spring hinges. Engineered for ultimate clarity and sleek design.</p>
+            <div class="tier-inclusions-strip">
+              <span class="inc-label">INCLUDES:</span>
+              <div class="inc-tags">
+                <span class="inc-tag">Hard Case</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Anti-Fog Cleaner</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Package Box</span><span class="inc-dot">·</span>
+                <span class="inc-tag">3 Month Warranty</span>
+              </div>
+            </div>
+            <div class="tier-hero-cta">
+              <a href="/premium" class="btn btn-primary btn-premium-cta">
+                EXPLORE PREMIUM RANGE →
+              </a>
+            </div>
+          </div>
+          <div class="tier-hero-media">
+            <a href="/premium" class="tier-hero-img-wrap">
+              <img src="product_premium_set.png" alt="FLEXER Premium Range Sunglasses Collection" class="tier-hero-img" loading="lazy" />
+              <div class="tier-hero-overlay"></div>
+              <span class="tier-hero-badge">PREMIUM COLLECTION</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- BRANDED TIER -->
+      <div class="tier-card tier-card-hero tier-branded" id="section-branded">
+        <div class="tier-hero-grid">
+          <div class="tier-hero-info">
+            <div class="tier-card-top-bar">
+              <span class="tier-badge tier-badge-branded">03 / COLLECTION</span>
+              <span class="tier-price-range" id="tier-branded-range">LKR 23,000+</span>
+            </div>
+            <div class="tier-main-heading-group">
+              <h3 class="tier-range-name-xl">BRANDED RANGE</h3>
+              <p class="tier-range-sub-title">Collector's <em>Edition</em></p>
+            </div>
+            <p class="tier-card-subtitle-lg">Aircraft-grade materials, hand-finished silhouettes. Collector pieces built to perfection with handcrafted presentation boxes.</p>
+            <div class="tier-inclusions-strip">
+              <span class="inc-label">INCLUDES:</span>
+              <div class="inc-tags">
+                <span class="inc-tag">Branded Box</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Handcrafted Wooden Box</span><span class="inc-dot">·</span>
+                <span class="inc-tag">Original Case</span><span class="inc-dot">·</span>
+                <span class="inc-tag">1 Year Warranty</span>
+              </div>
+            </div>
+            <div class="tier-hero-cta">
+              <a href="/branded" class="btn btn-primary btn-branded-cta">
+                EXPLORE BRANDED RANGE →
+              </a>
+            </div>
+          </div>
+          <div class="tier-hero-media">
+            <a href="/branded" class="tier-hero-img-wrap">
+              <img src="product_branded_set.png" alt="FLEXER Branded Range Sunglasses Collection" class="tier-hero-img" loading="lazy" />
+              <div class="tier-hero-overlay"></div>
+              <span class="tier-hero-badge">BRANDED COLLECTION</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BEST SELLERS SECTION -->
+  <section class="bestsellers-section" id="bestsellers">
+    <div class="container">
+      <div class="section-header" style="text-align:center">
+        <p class="section-eyebrow">MOST POPULAR</p>
+        <h2 class="section-title">BEST SELLERS</h2>
+        <p class="section-sub" style="margin:0 auto">Our highest rated &amp; most requested silhouettes. Discover customer favorites across all ranges.</p>
+      </div>
+
+      <div class="products-grid bestsellers-grid" id="bestsellers-grid">
+        <div class="products-loading" style="grid-column:1/-1"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BRAND STORY SPLIT -->
+  <section class="split-section" id="about">
+    <div class="split-visual">
+      <div class="split-img-container">
+        <img src="hero_woman.png" alt="FLEXER brand story — premium sunglasses craftsmanship" class="split-img" loading="lazy" />
+        <div class="split-img-overlay"></div>
+      </div>
+      <div class="split-stat-block">
+        <div class="stat">
+          <span class="stat-num">15+</span>
+          <span class="stat-label">Colorways</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Silhouettes</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">UV400</span>
+          <span class="stat-label">All Lenses</span>
+        </div>
+      </div>
+    </div>
+    <div class="split-content">
+      <p class="section-eyebrow">Our Story</p>
+      <h2 class="split-title">WHY<br /><em>FLEX?</em></h2>
+      <p class="split-text">
+        Flex was born from a simple observation: while sunglasses were easy to find in Sri Lanka, a truly premium buying experience was not.
+      </p>
+      <p class="split-text">
+        Founded by an undergraduate student specializing in Optometry and Marketing Management, Flex began as a passion project — bringing together quality products, luxury presentation, and exceptional customer care at reasonable prices.
+      </p>
+      <p class="split-text">
+        Every product is carefully selected, quality-checked, and presented with attention to detail because we believe the experience should feel just as premium as the product itself.
+      </p>
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon">◈</div>
+          <div>
+            <strong>Carefully Selected</strong>
+            <p>Every frame is hand-picked and quality-checked before it reaches you.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">◈</div>
+          <div>
+            <strong>Luxury Presentation</strong>
+            <p>The unboxing experience is designed to feel just as premium as the product itself.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">◈</div>
+          <div>
+            <strong>Optometry-Backed</strong>
+            <p>Founded by an optometry student — quality isn't a buzzword, it's a qualification.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">◈</div>
+          <div>
+            <strong>Premium Without the Markup</strong>
+            <p>Value, style, and confidence at every price point. No compromises.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-mission">
+        <p>Today, Flex focuses on eyewear. Tomorrow, we aim to expand that same commitment to new product categories — staying true to our mission: delivering a premium experience without the premium markup.</p>
+      </div>
+      <a href="#shop" class="btn btn-primary" id="about-cta">Explore The Collection</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Reviews</p>
+        <h2 class="section-title">WHAT THEY SAY</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" id="review-1">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Unreal quality. The moment you take them out of the box you just know. The PHANTOM sits perfectly on your face — light as air but feels incredibly solid. I get compliments everywhere I go."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background: linear-gradient(135deg, #d4a853, #8b6914)">JK</div>
+            <div>
+              <strong>James K.</strong>
+              <small>S2 PHANTOM — Gold / Brown</small>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" id="review-2">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"The OBSIDIAN frames are insane. The gold detailing is so refined — not flashy, just elegant. And the packaging? I've kept the box on my desk just because it looks so good."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background: linear-gradient(135deg, #9b59b6, #6c3483)">AR</div>
+            <div>
+              <strong>Amara R.</strong>
+              <small>S1 OBSIDIAN — Black / Gold</small>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card" id="review-3">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Got the SPECTRE in Blue Mirror and honestly I wasn't prepared for how good they are. Wrap-around but not bulky at all. UV protection is legit. Will definitely be ordering again."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar" style="background: linear-gradient(135deg, #1abc9c, #16a085)">MT</div>
+            <div>
+              <strong>Marcus T.</strong>
+              <small>S3 SPECTRE — Gunmetal / Blue Mirror</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section" id="faq">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <p class="section-eyebrow">Questions</p>
+        <h2 class="section-title">FAQ</h2>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item" id="faq-1">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-1">
+            How do I know which size fits me?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Every style comes with full frame measurements on the product page — including lens width, bridge width, and temple length. We also include a fit guide to help you compare with your current frames.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-2">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-2">
+            Do you offer free shipping?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! All orders ship free worldwide, no minimum spend required. Domestic orders typically arrive in 3–5 business days. International orders take 7–14 business days.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-3">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-3">
+            What comes in the FLEXER box?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Every pair arrives with a matte black magnetic hard case, a microfibre soft pouch, a premium cleaning cloth, a Certificate of Craft, and a personal note from the FLEXER team.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-4">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-4">
+            Are the lenses really UV400?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Every single pair. UV400 means our lenses block 99.9% of UVA and UVB radiation. Your eyes deserve more than just style — we've got the protection covered.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-5">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-5">
+            What's covered under the warranty?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>All FLEXER frames come with warranty coverage against manufacturing defects. To claim, reach out directly on our Official WhatsApp Group with your order details and photos for instant assistance.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-6">
+          <button class="faq-question" aria-expanded="false" id="faq-btn-6">
+            Can I return or exchange?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes — we offer hassle-free returns within 30 days of delivery. Items must be unworn and in original packaging. Exchanges for a different colorway or style are always welcome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="container container-narrow">
+      <div class="newsletter-inner">
+        <p class="section-eyebrow">Stay in the Light</p>
+        <h2 class="newsletter-title">BE FIRST TO KNOW</h2>
+        <p class="newsletter-sub">Drop announcements. Exclusive access. Early releases. No spam — ever.</p>
+        <form class="newsletter-form" id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" id="newsletter-email" placeholder="your@email.com" required class="newsletter-input" />
+          <button type="submit" class="btn btn-primary" id="newsletter-submit">Notify Me</button>
+        </form>
+        <p class="newsletter-privacy">By subscribing you agree to our <a href="#">Privacy Policy</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2 class="section-title">CONTACT</h2>
+      </div>
+      <!-- WHATSAPP BANNER CARD -->
+      <div class="whatsapp-card" id="whatsapp-community-card">
+        <div class="wa-icon-glow">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        </div>
+        <div class="wa-content">
+          <h3>Join Our Official WhatsApp Community</h3>
+          <p>Connect directly with the FLEXER team, get instant support, track your orders, and receive early access to new drops.</p>
+        </div>
+        <a href="https://chat.whatsapp.com/Bj1jp9x5n4QDovZsfiMCr9?s=cl&p=i&ilr=2&amv=0" target="_blank" rel="noopener" class="btn btn-whatsapp" id="btn-join-whatsapp">
+          Join WhatsApp Group →
+        </a>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">💬</span>
+            <div>
+              <strong>WhatsApp Support</strong>
+              <a href="https://chat.whatsapp.com/Bj1jp9x5n4QDovZsfiMCr9?s=cl&p=i&ilr=2&amv=0" target="_blank" rel="noopener" id="contact-whatsapp-link" class="wa-link-highlight">
+                Official WhatsApp Group
+              </a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">◎</span>
+            <div>
+              <strong>Social</strong>
+              <div class="social-links">
+                <a href="#" id="social-instagram">Instagram</a>
+                <a href="#" id="social-tiktok">TikTok</a>
+              </div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">◷</span>
+            <div>
+              <strong>Instant Support</strong>
+              <span>Active in WhatsApp Group</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-group">
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-email-field">Phone / WhatsApp Number</label>
+            <input type="tel" id="contact-email-field" placeholder="+94 77 123 4567" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" placeholder="How can we help?" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="contact-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">FLEXER</a>
+          <p class="footer-tagline">Don't just wear, FLEX.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.79a8.27 8.27 0 004.84 1.56V6.9a4.85 4.85 0 01-1.07-.21z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links-cols">
+          <div class="footer-col">
+            <h4>Ranges</h4>
+            <ul>
+              <li><a href="/budget">Budget Collection</a></li>
+              <li><a href="/premium">Premium Collection</a></li>
+              <li><a href="/branded">Branded Collection</a></li>
+              <li><a href="/#shop">Shop All</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Help &amp; Support</h4>
+            <ul>
+              <li><a href="/#faq">FAQ</a></li>
+              <li><a href="/#contact">Contact Us</a></li>
+              <li><a href="https://wa.me/94775580968" target="_blank" rel="noopener">WhatsApp Care</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>About FLEXER</h4>
+            <ul>
+              <li><a href="/#about">Our Story</a></li>
+              <li><a href="/admin" target="_blank">Admin Access</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 FLEXER Eyewear. All rights reserved.</p>
+        <p>Engineered for those who see differently.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-backdrop" id="cart-backdrop" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h3>YOUR CART</h3>
+      <button class="cart-close" id="cart-close" onclick="closeCart()" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <p class="cart-empty" id="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total" id="cart-total-display"></div>
+      <button class="btn btn-primary btn-full" id="checkout-btn" onclick="goToCheckout()">Proceed to Checkout →</button>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="modal-backdrop hidden" id="quickview-backdrop" onclick="closeQuickView()">
+    <div class="quickview-modal" onclick="event.stopPropagation()">
+      <div class="qv-mobile-sticky-header">
+        <button class="qv-back-btn" onclick="closeQuickView()" type="button">← Back</button>
+        <span class="qv-header-title">Product Details</span>
+        <button class="quickview-close qv-header-close" onclick="closeQuickView()" aria-label="Close modal" type="button">✕</button>
+      </div>
+      <button class="quickview-close qv-floating-close" id="quickview-close" onclick="closeQuickView()" aria-label="Close modal" type="button">✕</button>
+      <div class="quickview-body" id="quickview-body">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast"></div>
+
+  <script src="/main.js?v=3.0"></script>
+</body>
+</html>

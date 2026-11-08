@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#faf7f0" />
+    <title>FLEXER Operations</title>
+  </head>
+  <body class="admin-page">
+    <main class="admin-login" data-admin-login>
+      <form class="admin-login__card" data-login-form>
+        <p class="admin-wordmark">FLEXER</p>
+        <p class="eyebrow">Merchant operations</p>
+        <h1>Sign in</h1>
+        <label
+          >Username<input required name="username" autocomplete="username"
+        /></label>
+        <label
+          >Password<input
+            required
+            name="password"
+            type="password"
+            autocomplete="current-password"
+        /></label>
+        <p class="admin-error" data-login-error role="alert"></p>
+        <button class="admin-button" type="submit">Sign in</button>
+      </form>
+    </main>
+    <main class="admin-app" data-admin-app hidden>
+      <aside class="admin-sidebar">
+        <a class="admin-wordmark" href="/">FLEXER</a>
+        <p>Operations</p>
+        <nav>
+          <button class="is-active" data-admin-tab="dashboard">Overview</button
+          ><button data-admin-tab="orders">Orders</button
+          ><button data-admin-tab="products">Products</button
+          ><button data-admin-tab="content">Content</button
+          ><button data-admin-tab="settings">Settings</button>
+        </nav>
+        <div>
+          <a href="/" target="_blank" rel="noreferrer">Open storefront ↗</a
+          ><button data-admin-logout>Sign out</button>
+        </div>
+      </aside>
+      <section class="admin-workspace">
+        <header>
+          <div>
+            <p class="eyebrow" data-admin-eyebrow>Command center</p>
+            <h1 data-admin-title>Overview</h1>
+          </div>
+          <button class="admin-button" data-new-product>New product</button>
+        </header>
+        <div data-admin-panel></div>
+      </section>
+    </main>
+    <div
+      class="admin-modal"
+      data-admin-modal
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Edit product"
+    >
+      <div class="admin-modal__card">
+        <button data-modal-close>Close</button>
+        <div data-admin-modal-content></div>
+      </div>
+    </div>
+    <script type="module" src="/src/admin.js"></script>
+  </body>
+</html>

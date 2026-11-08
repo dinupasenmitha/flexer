@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title desc">
+  <title id="title">FLEXER protective eyewear case</title>
+  <desc id="desc">A sculpted ivory and champagne-gold hard-shell eyewear case on a warm studio surface.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8f3eb"/><stop offset="1" stop-color="#e8ddcd"/></linearGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="0.92" y2="1"><stop stop-color="#fdfbf6"/><stop offset=".5" stop-color="#e9dfd1"/><stop offset="1" stop-color="#cbb99f"/></linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5cfaa"/><stop offset=".5" stop-color="#aa8552"/><stop offset="1" stop-color="#e8d5b5"/></linearGradient>
+    <filter id="shadow" x="-.2" y="-.3" width="1.4" height="1.7"><feGaussianBlur stdDeviation="15"/></filter>
+  </defs>
+  <rect width="720" height="460" fill="url(#bg)"/>
+  <ellipse cx="360" cy="333" rx="225" ry="39" fill="#66533d" opacity=".16" filter="url(#shadow)"/>
+  <g transform="rotate(-8 360 230)">
+    <path d="M148 224c0-46 37-83 83-83h258c46 0 83 37 83 83v60c0 36-29 65-65 65H213c-36 0-65-29-65-65z" fill="#bba98f" opacity=".48" transform="translate(0 12)"/>
+    <path d="M148 213c0-46 37-83 83-83h258c46 0 83 37 83 83v60c0 36-29 65-65 65H213c-36 0-65-29-65-65z" fill="url(#shell)" stroke="url(#rim)" stroke-width="3"/>
+    <path d="M170 215c0-35 28-63 63-63h247c35 0 63 28 63 63v51c0 23-19 42-42 42H212c-23 0-42-19-42-42z" fill="none" stroke="#fffdf8" stroke-opacity=".82" stroke-width="2"/>
+    <path d="M151 246h419" stroke="#ab895b" stroke-opacity=".43" stroke-width="2"/>
+    <circle cx="360" cy="246" r="7" fill="url(#rim)"/>
+    <text x="360" y="218" text-anchor="middle" fill="#75634b" font-family="Georgia,serif" font-size="24" letter-spacing="8">FLEXER</text>
+  </g>
+  <path d="M76 385h568" stroke="#b99c72" stroke-opacity=".25"/>
+</svg>

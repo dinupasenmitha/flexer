@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details &mdash; FLEXER Eyewear</title>
+  <meta name="description" content="View specifications, lens details, frame dimensions, and order genuine FLEXER eyewear." />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=20261027-4" />
+  <script src="/js/motion.js?v=20261027-4" defer></script>
+  <style>
+    .pdp-section {
+      padding: 56px 0 96px;
+    }
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 64px;
+      align-items: flex-start;
+    }
+    .pdp-gallery-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 100px;
+    }
+    .pdp-main-image-wrap {
+      position: relative;
+      aspect-ratio: 1/1;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .pdp-main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pdp-thumbs-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+    }
+    .pdp-thumb {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      opacity: 0.65;
+      transition: all var(--transition-fast);
+    }
+    .pdp-thumb.active, .pdp-thumb:hover {
+      opacity: 1;
+      border-color: var(--accent-gold);
+    }
+    .pdp-info-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .pdp-breadcrumbs {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 20px;
+    }
+    .pdp-breadcrumbs a {
+      color: var(--text-muted);
+    }
+    .pdp-breadcrumbs a:hover {
+      color: var(--accent-gold);
+    }
+    .pdp-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .pdp-price-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      margin: 16px 0 24px;
+      flex-wrap: wrap;
+    }
+    .pdp-description {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .pdp-variants-section {
+      margin-bottom: 28px;
+    }
+    .pdp-option-label {
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .pdp-swatches-strip {
+      display: flex;
+      gap: 12px;
+    }
+    .pdp-swatch-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .pdp-swatch-btn.active, .pdp-swatch-btn:hover {
+      transform: scale(1.25);
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
+    }
+    .pdp-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .pdp-actions-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .pdp-specs-block {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pdp-spec-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .pdp-spec-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .pdp-spec-label {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+    }
+    .pdp-spec-value {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .pdp-gallery-col {
+        position: static;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/css/editorial.css?v=20261027-4" />
+</head>
+<body>
+
+  <!-- &middot;NNOUNCEMENT B&middot;R -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>DROP 01 LIVE</span>
+      <span class="announcement-dot">&#10022;</span>
+      <span>FREE ISLANDWIDE DELIVERY</span>
+      <span class="announcement-dot">&#10022;</span>
+      <span>UV400 PROTECTION</span>
+      <span class="announcement-dot">&#10022;</span>
+      <span>BANK TRANSFER &middot; COD &middot; KOKO</span>
+    </div>
+  </div>
+
+  <!-- N&middot;VIG&middot;TION -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">FLEXER</a>
+
+      <nav class="nav-links-desktop">
+        <a href="/shop" class="nav-link">Shop All</a>
+        <a href="/shop?type=sunglasses" class="nav-link">Sunglasses</a>
+        <a href="/shop?type=optical" class="nav-link">Optical Frames</a>
+        <a href="/shop?category=budget" class="nav-link">Budget</a>
+        <a href="/shop?category=premium" class="nav-link">Premium</a>
+        <a href="/shop?category=branded" class="nav-link">Branded</a>
+        <a href="/about" class="nav-link">Our Story</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn-icon" aria-label="Open Shopping Bag" onclick="FLEXER.openCartDrawer()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-badge" style="display:none">0</span>
+        </button>
+
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DR&middot;WER -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <aside class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <span class="mobile-drawer-title">Navigation</span>
+      <button class="cart-close-btn" id="mobile-drawer-close">✕</button>
+    </div>
+    <div class="mobile-nav-links">
+      <a href="/shop" class="mobile-nav-link">Shop All Eyewear <span>&rarr;</span></a>
+      <a href="/shop?type=sunglasses" class="mobile-nav-link">Sunglasses <span>&rarr;</span></a>
+      <a href="/shop?type=optical" class="mobile-nav-link">Optical Frames <span>&rarr;</span></a>
+      <a href="/shop?category=budget" class="mobile-nav-link">Budget Range <span>&rarr;</span></a>
+      <a href="/shop?category=premium" class="mobile-nav-link">Premium Range <span>&rarr;</span></a>
+      <a href="/shop?category=branded" class="mobile-nav-link">Branded Range <span>&rarr;</span></a>
+      <a href="/about" class="mobile-nav-link">Our Story <span>&rarr;</span></a>
+    </div>
+  </aside>
+
+  <!-- PDP M&middot;IN CONTENT -->
+  <main class="pdp-section">
+    <div class="container" id="pdp-container">
+      <div style="text-align:center;padding:100px 20px;color:var(--text-muted)">Loading product details...</div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-title">FLEXER</div>
+          <p class="footer-tagline">Don't just wear, FLEX. Premium sunglasses and optical frames engineered for those who see differently.</p>
+          <nav class="footer-social-links" aria-label="Follow FLEXER">
+            <a href="https://www.tiktok.com/@flexer737" target="_blank" rel="noopener noreferrer" aria-label="FLEXER on TikTok">TikTok <span aria-hidden="true">↗</span></a>
+            <a href="https://www.facebook.com/profile.php?id=61564498420449" target="_blank" rel="noopener noreferrer" aria-label="FLEXER on Facebook">Facebook <span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Collections</h4>
+          <ul class="footer-links-list">
+            <li><a href="/shop?category=budget" class="footer-link">Budget Collection</a></li>
+            <li><a href="/shop?category=premium" class="footer-link">Premium Collection</a></li>
+            <li><a href="/shop?category=branded" class="footer-link">Branded Collection</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Customer Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="/shipping" class="footer-link">Delivery Policy</a></li>
+            <li><a href="/returns" class="footer-link">Returns & Exchanges</a></li>
+            <li><a href="/warranty" class="footer-link">Warranty Details</a></li>
+            <li><a href="https://wa.me/94775580968" target="_blank" rel="noopener" class="footer-link">WhatsApp Care</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Store</h4>
+          <ul class="footer-links-list">
+            <li><a href="/about" class="footer-link">Our Story</a></li>
+            <li><a href="/contact" class="footer-link">Contact</a></li>
+            <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 FLEXER Eyewear. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- C&middot;RT DR&middot;WER -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <span class="cart-drawer-title">Shopping Bag</span>
+      <button class="cart-close-btn" onclick="FLEXER.closeCartDrawer()">✕</button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-body"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-summary-line">
+        <span>Delivery</span>
+        <span style="color:var(--accent-gold);font-weight:600">FREE</span>
+      </div>
+      <div class="cart-summary-line total">
+        <span>Total Payable</span>
+        <span id="cart-drawer-subtotal">LKR 0</span>
+      </div>
+      <a href="/checkout" class="btn btn-primary" style="width:100%" id="cart-drawer-checkout-btn">PROCEED TO CHECKOUT  </a>
+    </div>
+  </aside>
+
+  <!-- FLO&middot;TING WH&middot;TS&middot;PP BUTTON -->
+  <a href="https://wa.me/94775580968" target="_blank" rel="noopener" class="floating-whatsapp" aria-label="WhatsApp Support">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <script src="/js/store.js"></script>
+  <script src="/js/product.js"></script>
+</body>
+</html>

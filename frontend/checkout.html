@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf7f0" />
+    <meta
+      name="description"
+      content="Complete your FLEXER eyewear order securely."
+    />
+    <title>Checkout — FLEXER</title>
+  </head>
+  <body class="commerce-page">
+    <a class="skip-link" href="#checkout">Skip to checkout</a>
+    <div id="commerce-shell"></div>
+    <main id="checkout" class="checkout shell section">
+      <div class="checkout-intro">
+        <p class="eyebrow">Secure checkout</p>
+        <h1>Checkout</h1>
+      </div>
+      <div class="checkout-layout">
+        <form class="checkout-form" data-checkout-form novalidate>
+          <section>
+            <h2>Delivery details</h2>
+            <div class="form-grid">
+              <label
+                >Full name<input
+                  required
+                  name="customer_name"
+                  autocomplete="name" /></label
+              ><label
+                >Phone number<input
+                  required
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  inputmode="tel" /></label
+              ><label
+                >WhatsApp number <span>optional</span
+                ><input
+                  name="whatsapp_number"
+                  type="tel"
+                  inputmode="tel" /></label
+              ><label
+                >Email <span>optional</span
+                ><input name="email" type="email" autocomplete="email" /></label
+              ><label class="form-span"
+                >Delivery address<input
+                  required
+                  name="address"
+                  autocomplete="street-address" /></label
+              ><label
+                >City / town<input
+                  required
+                  name="city"
+                  autocomplete="address-level2" /></label
+              ><label
+                >District<select required name="district" data-districts>
+                  <option value="">Select district</option>
+                </select></label
+              ><label
+                >Postal code <span>optional</span
+                ><input name="postal_code" autocomplete="postal-code" /></label
+              ><label class="form-span"
+                >Order note <span>optional</span
+                ><textarea name="notes" rows="3"></textarea>
+              </label>
+            </div>
+          </section>
+          <section class="payment-section">
+            <h2>Payment method</h2>
+            <label class="payment-choice"
+              ><input
+                type="radio"
+                name="payment_method"
+                value="bank_transfer"
+                checked
+              /><span
+                ><strong>Bank transfer</strong
+                ><small
+                  >Transfer after your order reference is created.</small
+                ></span
+              ></label
+            >
+            <div class="payment-notice" data-bank-notice>
+              <strong>Payment slips stay private.</strong>
+              <p>
+                Never upload a payment slip to this website. After placing your
+                order, send it directly to FLEXER in WhatsApp.
+              </p>
+            </div>
+            <label class="payment-choice"
+              ><input type="radio" name="payment_method" value="cod" /><span
+                ><strong>Cash on Delivery</strong
+                ><small>Pay when your order arrives.</small></span
+              ></label
+            ><label class="payment-choice" data-koko-choice hidden
+              ><input type="radio" name="payment_method" value="koko" /><span
+                ><strong>Koko instalments</strong
+                ><small
+                  >Available when the merchant connection is active.</small
+                ></span
+              ></label
+            >
+            <p class="payment-notice" data-koko-unavailable>
+              Koko instalments are not available yet. Please select Bank
+              Transfer or Cash on Delivery.
+            </p>
+          </section>
+          <p class="checkout-error" data-checkout-error role="alert"></p>
+          <button class="button button--dark checkout-submit" type="submit">
+            <span>Place secure order</span><i aria-hidden="true">&rarr;</i>
+          </button>
+          <p class="checkout-privacy">
+            Your items and price are validated by FLEXER before this order is
+            saved.
+          </p>
+        </form>
+        <aside class="checkout-summary">
+          <h2>Your bag</h2>
+          <div data-checkout-items></div>
+          <dl>
+            <div>
+              <dt>Subtotal</dt>
+              <dd data-checkout-subtotal>LKR 0</dd>
+            </div>
+            <div>
+              <dt>
+                Delivery <span class="delivery-eta" data-delivery-eta></span>
+              </dt>
+              <dd data-checkout-delivery>Select district</dd>
+            </div>
+            <div class="checkout-total">
+              <dt>Total</dt>
+              <dd data-checkout-total>LKR 0</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      <section
+        class="order-success"
+        data-order-success
+        hidden
+        aria-live="polite"
+      ></section>
+    </main>
+    <script type="module" src="/src/checkout.js"></script>
+  </body>
+</html>

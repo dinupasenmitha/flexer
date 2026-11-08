@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & Support &mdash; FLEXER Eyewear</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css?v=20261027-4" />
+  <link rel="stylesheet" href="/css/editorial.css?v=20261027-4" />
+  <script src="/js/motion.js?v=20261027-4" defer></script>
+</head>
+<body>
+  <!-- HE&middot;DER -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">FLEXER</a>
+      <nav class="nav-links-desktop">
+        <a href="/shop" class="nav-link">Shop All</a>
+        <a href="/shop?type=sunglasses" class="nav-link">Sunglasses</a>
+        <a href="/shop?type=optical" class="nav-link">Optical Frames</a>
+        <a href="/about" class="nav-link">Our Story</a>
+        <a href="/contact" class="nav-link active">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="nav-btn-icon" aria-label="Bag" onclick="FLEXER.openCartDrawer()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container container-narrow">
+      <span class="section-eyebrow">Client Services</span>
+      <h1 class="section-title" style="text-align:left;margin-bottom:18px">GET IN TOUCH</h1>
+      <p style="color:var(--text-muted);margin-bottom:40px;line-height:1.6">Have a question regarding sizing, frame materials, prescription lenses, or your active order? Reach out to our Sri Lanka support team directly.</p>
+
+      <div class="contact-methods-grid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-bottom:48px">
+        <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:4px;padding:28px">
+          <h3 style="font-family:var(--font-mono);font-size:0.9rem;text-transform:uppercase;color:var(--accent-gold);margin-bottom:10px">WhatsApp Care</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px">Connect with our optometry team for immediate assistance and tracking.</p>
+          <a href="https://wa.me/94775580968" target="_blank" rel="noopener" class="btn btn-whatsapp" style="width:100%">
+            Chat on WhatsApp (+94 77 558 0968)
+          </a>
+        </div>
+
+        <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:4px;padding:28px">
+          <h3 style="font-family:var(--font-mono);font-size:0.9rem;text-transform:uppercase;color:var(--accent-gold);margin-bottom:10px">Official Community</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px">Join our verified WhatsApp Group for drop alerts and private flash sales.</p>
+          <a href="https://chat.whatsapp.com/Bj1jp9x5n4QDovZsfiMCr9?s=cl&p=i&ilr=2&amv=0" target="_blank" rel="noopener" class="btn btn-secondary" style="width:100%">
+            Join WhatsApp Group  
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Message Form -->
+      <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:4px;padding:36px">
+        <h3 style="font-family:var(--font-mono);font-size:1rem;text-transform:uppercase;margin-bottom:20px">Send a Message</h3>
+        <form id="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Your Name</label>
+            <input type="text" id="contact-name" class="form-input" placeholder="e.g. Ruwan Silva" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contact-phone">Phone / WhatsApp Number</label>
+            <input type="tel" id="contact-phone" class="form-input" placeholder="077 123 4567" required />
+          </div>
+          <div class="form-group" style="margin-bottom:24px">
+            <label class="form-label" for="contact-message">How can we assist you?</label>
+            <textarea id="contact-message" class="form-textarea" placeholder="Inquiry details..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Send Message  </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 FLEXER Eyewear. All rights reserved.</div>
+        <div class="footer-bottom-socials">
+          <a href="https://www.tiktok.com/@flexer737" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
+          <a href="https://www.facebook.com/profile.php?id=61564498420449" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+          <a href="/">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/store.js"></script>
+  <script src="/js/main.js?v=20261027-5"></script>
+</body>
+</html>

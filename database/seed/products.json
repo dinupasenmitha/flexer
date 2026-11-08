@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "status": "placeholder_only",
+    "warning": "Replace every item with business-approved catalogue data before launch. These entries are not real products, reviews, or claims.",
+    "currency": "LKR"
+  },
+  "products": [
+    {
+      "sku": "PLACEHOLDER-BUDGET-001",
+      "name": "Budget Frame Placeholder",
+      "slug": "budget-frame-placeholder",
+      "range": "budget",
+      "product_type": "sunglasses",
+      "price_lkr": 1690,
+      "status": "draft"
+    },
+    {
+      "sku": "PLACEHOLDER-PREMIUM-001",
+      "name": "Premium Frame Placeholder",
+      "slug": "premium-frame-placeholder",
+      "range": "premium",
+      "product_type": "sunglasses",
+      "price_lkr": 7560,
+      "status": "draft"
+    },
+    {
+      "sku": "PLACEHOLDER-BRANDED-001",
+      "name": "Branded Frame Placeholder",
+      "slug": "branded-frame-placeholder",
+      "range": "branded",
+      "product_type": "sunglasses",
+      "price_lkr": 23000,
+      "status": "draft"
+    }
+  ]
+}

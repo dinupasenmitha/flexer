@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Product photograph pending</title>
+  <desc id="desc">A neutral placeholder until an approved photograph is available.</desc>
+  <rect width="800" height="800" fill="#f5f3ed"/>
+  <path d="M100 640H700" stroke="#d8d3c7"/>
+  <text x="400" y="375" text-anchor="middle" font-family="Arial,sans-serif" font-size="38" fill="#252720">FLEXER</text>
+  <text x="400" y="425" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#625f55">Product photograph pending</text>
+</svg>

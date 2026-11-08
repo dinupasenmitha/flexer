@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf7f0" />
+    <meta
+      name="description"
+      content="Explore the FLEXER eyewear collection in Sri Lanka."
+    />
+    <link rel="canonical" href="https://flexer.mrteches.com/shop" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FLEXER" />
+    <meta property="og:title" content="Shop Eyewear — FLEXER" />
+    <meta
+      property="og:description"
+      content="Explore the FLEXER eyewear collection in Sri Lanka."
+    />
+    <title>Shop Eyewear — FLEXER</title>
+  </head>
+  <body class="commerce-page">
+    <a class="skip-link" href="#catalogue">Skip to collection</a>
+    <div id="commerce-shell"></div>
+    <main id="catalogue">
+      <header class="commerce-hero">
+        <div class="shell">
+          <p class="eyebrow">The full collection</p>
+          <h1>Find your next frame</h1>
+          <p>
+            Curated sunglasses and optical frames, available across Sri Lanka.
+          </p>
+        </div>
+      </header>
+      <section class="catalogue shell section">
+        <div class="catalogue-toolbar">
+          <button class="filter-trigger" type="button" data-filter-open>
+            Filters <span data-filter-count></span></button
+          ><label class="catalogue-search"
+            ><span class="sr-only">Search the collection</span
+            ><input
+              type="search"
+              data-catalogue-search
+              placeholder="Search frames" /></label
+          ><label class="catalogue-sort"
+            >Sort
+            <select data-catalogue-sort>
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="newest">Newest</option>
+              <option value="name">Name A–Z</option>
+            </select></label
+          >
+        </div>
+        <div class="active-filters" data-active-filters></div>
+        <div class="catalogue-meta">
+          <p data-product-count>Loading collection</p>
+          <button type="button" data-reset-filters>Clear filters</button>
+        </div>
+        <div
+          class="catalogue-grid"
+          data-catalogue-grid
+          aria-live="polite"
+        ></div>
+      </section>
+    </main>
+    <aside class="filter-drawer" data-filter-drawer aria-hidden="true">
+      <div class="filter-drawer__head">
+        <p class="eyebrow">Filter collection</p>
+        <button type="button" data-filter-close>Close</button>
+      </div>
+      <form data-filter-form>
+        <fieldset>
+          <legend>Range</legend>
+          <label
+            ><input type="radio" name="category" value="all" checked /> All
+            frames</label
+          ><label
+            ><input type="radio" name="category" value="budget" /> Budget</label
+          ><label
+            ><input type="radio" name="category" value="premium" />
+            Premium</label
+          ><label
+            ><input type="radio" name="category" value="branded" />
+            Branded</label
+          >
+        </fieldset>
+        <fieldset>
+          <legend>Frame type</legend>
+          <label
+            ><input type="radio" name="type" value="all" checked /> All
+            types</label
+          ><label
+            ><input type="radio" name="type" value="sunglasses" />
+            Sunglasses</label
+          ><label
+            ><input type="radio" name="type" value="optical" /> Optical
+            frames</label
+          >
+        </fieldset>
+        <fieldset>
+          <legend>Maximum price</legend>
+          <input
+            type="range"
+            min="2000"
+            max="30000"
+            step="500"
+            value="30000"
+            data-price-range
+          /><output data-price-output>LKR 30,000</output>
+        </fieldset>
+        <button class="button button--dark" type="submit">
+          <span>Apply filters</span><i aria-hidden="true">↗</i>
+        </button>
+      </form>
+    </aside>
+    <div
+      class="modal-backdrop commerce-modal"
+      data-quick-view
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Quick product view"
+    >
+      <button type="button" class="modal-close" data-quick-close>Close</button>
+      <div data-quick-content></div>
+    </div>
+    <script type="module" src="/src/shop.js"></script>
+  </body>
+</html>

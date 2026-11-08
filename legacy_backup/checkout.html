@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — FLEXER Eyewear</title>
+  <meta name="description" content="Secure checkout for FLEXER premium sunglasses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/checkout.css?v=2.1" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="co-nav">
+    <a href="/" class="co-nav-logo">FLEXER</a>
+    <div class="co-nav-steps">
+      <span class="step active" id="step-indicator-cart">Cart</span>
+      <span class="step-sep">›</span>
+      <span class="step active" id="step-indicator-details">Details</span>
+      <span class="step-sep">›</span>
+      <span class="step" id="step-indicator-payment">Payment</span>
+      <span class="step-sep">›</span>
+      <span class="step" id="step-indicator-confirm">Confirm</span>
+    </div>
+    <a href="/" class="co-nav-back">← Continue Shopping</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="co-main">
+
+    <!-- LEFT: FORM AREA -->
+    <div class="co-form-area" id="co-form-area">
+
+      <!-- STEP 1: DETAILS -->
+      <section class="co-step" id="step-details">
+        <h2 class="co-step-title">Your Details</h2>
+        <form id="details-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Full Name <span class="req">*</span></label>
+              <input type="text" id="f-name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email Address <span class="req">*</span></label>
+              <input type="email" id="f-email" placeholder="you@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-phone">Phone Number</label>
+              <input type="tel" id="f-phone" placeholder="+1 555 000 0000" />
+            </div>
+            <div class="form-group">
+              <label for="f-city">City <span class="req">*</span></label>
+              <input type="text" id="f-city" placeholder="New York" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-address">Delivery Address <span class="req">*</span></label>
+            <input type="text" id="f-address" placeholder="123 Main Street, Apt 4B" required />
+          </div>
+          <div class="form-group">
+            <label for="f-notes">Order Notes (optional)</label>
+            <textarea id="f-notes" rows="2" placeholder="Any special instructions..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="btn-next-payment">
+            Continue to Payment →
+          </button>
+        </form>
+      </section>
+
+      <!-- STEP 2: PAYMENT -->
+      <section class="co-step hidden" id="step-payment">
+        <h2 class="co-step-title">Payment Method</h2>
+
+        <div class="payment-methods" id="payment-methods">
+          <label class="payment-option active" id="pay-cod-label">
+            <input type="radio" name="payment" value="cod" checked id="pay-cod" />
+            <div class="pay-icon">🏠</div>
+            <div class="pay-info">
+              <strong>Cash on Delivery</strong>
+              <small>Pay with cash when your order arrives</small>
+            </div>
+            <div class="pay-check">✓</div>
+          </label>
+          <label class="payment-option" id="pay-whatsapp-label">
+            <input type="radio" name="payment" value="whatsapp" id="pay-whatsapp" />
+            <div class="pay-icon">💬</div>
+            <div class="pay-info">
+              <strong>Online Payment</strong>
+              <small>Pay online &amp; send your receipt via WhatsApp</small>
+            </div>
+            <div class="pay-check">✓</div>
+          </label>
+        </div>
+
+        <!-- WhatsApp info banner (shown when Online is selected) -->
+        <div class="whatsapp-info hidden" id="whatsapp-info">
+          <span class="wa-icon">📲</span>
+          <div>
+            <strong>How it works:</strong> After placing your order, you'll be redirected to WhatsApp to send your payment &amp; confirm your order with us.
+          </div>
+        </div>
+
+        <div class="co-btns">
+          <button class="btn btn-ghost" id="btn-back-details">← Back</button>
+          <button class="btn btn-primary" id="btn-place-order">Place Order →</button>
+        </div>
+      </section>
+
+      <!-- STEP 3: PROCESSING -->
+      <section class="co-step hidden" id="step-processing">
+        <div class="processing-inner">
+          <div class="processing-spinner"></div>
+          <h2>Processing your order...</h2>
+          <p>Please wait a moment.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4: CONFIRMATION -->
+      <section class="co-step hidden" id="step-confirm">
+        <div class="confirm-inner">
+          <div class="confirm-icon">✦</div>
+          <h2 class="confirm-title">Order Confirmed!</h2>
+          <p class="confirm-sub">Thank you for your purchase. Your FLEXER frames are on their way.</p>
+          <div class="confirm-order-id" id="confirm-order-id">Order #—</div>
+          <div class="confirm-details" id="confirm-details"></div>
+          <div id="confirm-wa-btn-wrap" style="margin-top:16px;display:none">
+            <a id="confirm-wa-btn" href="#" target="_blank"
+               class="btn btn-primary"
+               style="background:linear-gradient(135deg,#25D366,#128C7E);border-color:#25D366;display:inline-flex;align-items:center;gap:8px">
+              💬 Chat on WhatsApp
+            </a>
+          </div>
+          <a href="/" class="btn btn-ghost" id="btn-continue-shopping" style="margin-top:12px">Continue Shopping</a>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <aside class="co-summary" id="co-summary">
+      <h3 class="co-summary-title">Order Summary</h3>
+      <div class="summary-items" id="summary-items">
+        <!-- filled by JS -->
+      </div>
+      <div class="summary-totals">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="summary-subtotal">LKR 0</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free-ship">FREE</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="summary-total">LKR 0</span>
+        </div>
+      </div>
+      <div class="summary-badges">
+        <span>🔒 Secure Checkout</span>
+        <span>🚚 Free Shipping</span>
+        <span>↩ 30-Day Returns</span>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer" style="background:var(--black);border-top:1px solid var(--border);padding:40px 0 24px">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;display:flex;justify-content:space-between;align-items:center">
+        <p>© 2026 FLEXER Eyewear. Secure Checkout.</p>
+        <div style="display:flex;gap:16px;font-size:12px;color:var(--muted)">
+          <a href="/" style="color:inherit">Back to Store</a>
+          <span>·</span>
+          <a href="https://wa.me/94775580968" target="_blank" rel="noopener" style="color:inherit">Help &amp; Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/checkout.js?v=2.1"></script>
+</body>
+</html>

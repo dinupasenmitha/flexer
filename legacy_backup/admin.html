@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — FLEXER Eyewear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="stylesheet" href="/admin.css?v=2.1" />
+</head>
+<body>
+
+  <!-- ============ LOGIN SCREEN ============ -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">FLEXER</div>
+      <p class="login-sub">Admin Panel</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" placeholder="admin" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <div class="login-error hidden" id="login-error">Invalid credentials. Try again.</div>
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div class="dashboard hidden" id="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">FLEXER</div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" id="nav-dashboard" data-tab="tab-dashboard">
+          <span class="nav-icon">◈</span> Dashboard
+        </button>
+        <button class="nav-item" id="nav-products" data-tab="tab-products">
+          <span class="nav-icon">◉</span> Products
+        </button>
+        <button class="nav-item" id="nav-orders" data-tab="tab-orders">
+          <span class="nav-icon">◎</span> Orders
+          <span class="nav-badge" id="pending-badge" style="display:none"></span>
+        </button>
+        <button class="nav-item" id="nav-messages" data-tab="tab-messages">
+          <span class="nav-icon">◷</span> Messages
+          <span class="nav-badge" id="msg-badge" style="display:none"></span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebar-user">Admin</div>
+        <button class="logout-btn" id="logout-btn">Sign Out</button>
+        <a href="/" class="sidebar-store-link" target="_blank">← View Store</a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
+        <div class="topbar-actions" id="topbar-actions"></div>
+      </div>
+
+      <!-- TAB: DASHBOARD -->
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">◉</div>
+            <div class="stat-value" id="stat-products">—</div>
+            <div class="stat-label">Active Products</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">◎</div>
+            <div class="stat-value" id="stat-orders">—</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-card highlight">
+            <div class="stat-icon">$</div>
+            <div class="stat-value" id="stat-revenue">—</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value" id="stat-pending">—</div>
+            <div class="stat-label">Pending Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✉</div>
+            <div class="stat-value" id="stat-messages">—</div>
+            <div class="stat-label">New Messages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">◌</div>
+            <div class="stat-value" id="stat-subscribers">—</div>
+            <div class="stat-label">Subscribers</div>
+          </div>
+        </div>
+        <div class="recent-section">
+          <h3 class="section-label">Recent Orders</h3>
+          <div id="recent-orders-table"></div>
+        </div>
+      </div>
+
+      <!-- TAB: PRODUCTS -->
+      <div class="tab-content" id="tab-products">
+        <div id="products-table-wrap"></div>
+      </div>
+
+      <!-- TAB: ORDERS -->
+      <div class="tab-content" id="tab-orders">
+        <div id="orders-filter-bar" class="orders-filter-bar"></div>
+        <div id="orders-table-wrap"></div>
+      </div>
+
+      <!-- TAB: MESSAGES -->
+      <div class="tab-content" id="tab-messages">
+        <div class="messages-section">
+          <h3 class="section-label">Newsletter Subscribers</h3>
+          <div id="subscribers-list"></div>
+          <h3 class="section-label" style="margin-top:32px">Contact Messages</h3>
+          <div id="contacts-list"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============ PRODUCT MODAL ============ -->
+  <div class="modal-backdrop hidden" id="product-modal-backdrop">
+    <div class="modal" id="product-modal" role="dialog" aria-label="Product form">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Product</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      </div>
+      <form class="modal-body" id="product-form" enctype="multipart/form-data">
+        <input type="hidden" id="product-id" />
+        <div class="modal-grid">
+          <div class="form-group">
+            <label for="p-name">Product Name <span class="req">*</span></label>
+            <input type="text" id="p-name" placeholder="S1 OBSIDIAN" required />
+          </div>
+          <div class="form-group">
+            <label for="p-category">Range / Category <span class="req">*</span></label>
+            <select id="p-category">
+              <option value="budget">Budget</option>
+              <option value="premium">Premium</option>
+              <option value="branded">Branded</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="p-price">Price (LKR) <span class="req">*</span></label>
+            <input type="number" id="p-price" placeholder="3500" min="0" step="1" required />
+          </div>
+          <div class="form-group">
+            <label for="p-original-price">Original Price (LKR)</label>
+            <input type="number" id="p-original-price" placeholder="4900" min="0" step="1" />
+          </div>
+          <div class="form-group">
+            <label for="p-badge">Badge (e.g. NEW, SIGNATURE, HOT)</label>
+            <input type="text" id="p-badge" placeholder="SIGNATURE" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="p-description">Description</label>
+          <textarea id="p-description" rows="2" placeholder="Short product description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Product Images <span style="color:var(--muted);font-weight:400;font-size:12px">(First image = primary. Drag to reorder coming soon.)</span></label>
+          <!-- Hidden file input for multiple files -->
+          <input type="file" id="p-image" accept="image/*" multiple style="display:none" />
+          <!-- Thumbnail strip -->
+          <div class="multi-img-strip" id="multi-img-strip">
+            <!-- Populated by admin.js -->
+            <div class="multi-img-empty" id="multi-img-empty">
+              <span style="font-size:28px">🖼️</span>
+              <div>No images yet</div>
+            </div>
+          </div>
+          <!-- Add images button -->
+          <button type="button" class="btn btn-ghost btn-sm" id="multi-img-add-btn" style="margin-top:10px;width:100%">
+            + Add Images
+          </button>
+          <!-- URL fallback -->
+          <input type="text" id="p-image-url" placeholder="Or paste an image URL / filename (e.g. product_obsidian.png)" style="margin-top:8px" />
+        </div>
+        <div class="form-group">
+          <label>Color Variants</label>
+          <div class="color-picker-widget">
+            <div class="selected-swatches-strip" id="selected-swatches-strip"></div>
+            <div class="color-add-row">
+              <div class="color-picker-input-wrap">
+                <input type="color" id="p-color-picker" value="#080808" />
+                <span>Visual Palette</span>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-add-color-picker">+ Add Color</button>
+            </div>
+            <div class="preset-swatches-row">
+              <span class="preset-label">Presets:</span>
+              <button type="button" class="preset-dot" style="background:#080808" title="Black" data-color="#080808"></button>
+              <button type="button" class="preset-dot" style="background:#c9a84c" title="Gold" data-color="#c9a84c"></button>
+              <button type="button" class="preset-dot" style="background:#c0c0c0" title="Silver" data-color="#c0c0c0"></button>
+              <button type="button" class="preset-dot" style="background:#8b5a2b" title="Tortoise" data-color="#8b5a2b"></button>
+              <button type="button" class="preset-dot" style="background:#b76e79" title="Rose Gold" data-color="#b76e79"></button>
+              <button type="button" class="preset-dot" style="background:#2c3e50" title="Gunmetal" data-color="#2c3e50"></button>
+              <button type="button" class="preset-dot" style="background:#1e3a8a" title="Blue" data-color="#1e3a8a"></button>
+              <button type="button" class="preset-dot" style="background:#f0e6d2" title="Beige" data-color="#f0e6d2"></button>
+            </div>
+          </div>
+          <input type="text" id="p-colors" placeholder="#080808, #c9a84c" style="margin-top:10px" />
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="p-active" checked />
+            <span>Active (visible on store)</span>
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" id="modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-save">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ CONFIRM DELETE MODAL ============ -->
+  <div class="modal-backdrop hidden" id="delete-modal-backdrop">
+    <div class="modal modal-sm" id="delete-modal">
+      <div class="modal-header">
+        <h3>Confirm Delete</h3>
+        <button class="modal-close" id="delete-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="delete-modal-msg">Are you sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="delete-cancel">Cancel</button>
+        <button class="btn btn-danger" id="delete-confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="admin-toast"></div>
+
+  <script src="/admin.js?v=2.1"></script>
+</body>
+</html>
