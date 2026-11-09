@@ -8,14 +8,14 @@ const path = require('node:path');
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 
-// On Netlify/Lambda the filesystem is read-only except /tmp.
+// On Netlify/Vercel/Lambda the filesystem is read-only except /tmp.
 // Copy the seed database there on cold start so writes work.
-const IS_NETLIFY = !!process.env.NETLIFY || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+const IS_SERVERLESS = !!process.env.NETLIFY || !!process.env.AWS_LAMBDA_FUNCTION_NAME || !!process.env.VERCEL;
 
 let DATA_DIR;
 if (process.env.FLEXER_DATA_DIR) {
   DATA_DIR = process.env.FLEXER_DATA_DIR;
-} else if (IS_NETLIFY) {
+} else if (IS_SERVERLESS) {
   DATA_DIR = '/tmp/flexer-data';
 } else {
   DATA_DIR = path.join(__dirname, '..', 'data');
@@ -27,8 +27,8 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const DB_PATH = path.join(DATA_DIR, 'flexer.db');
 
-// On Netlify cold start, seed the DB from the bundled copy if it doesn't exist in /tmp
-if (IS_NETLIFY && !fs.existsSync(DB_PATH)) {
+// On Serverless cold start, seed the DB from the bundled copy if it doesn't exist in /tmp
+if (IS_SERVERLESS && !fs.existsSync(DB_PATH)) {
   const seedDb = path.join(__dirname, '..', 'data', 'flexer.db');
   if (fs.existsSync(seedDb)) {
     fs.copyFileSync(seedDb, DB_PATH);

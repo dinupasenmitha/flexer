@@ -1,16 +1,32 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "public"
-      }
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "data/**"
     }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/$1" }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/shop", "destination": "/build/shop.html" },
+    { "source": "/product/(.*)", "destination": "/build/product.html" },
+    { "source": "/budget", "destination": "/build/shop.html" },
+    { "source": "/premium", "destination": "/build/shop.html" },
+    { "source": "/branded", "destination": "/build/shop.html" },
+    { "source": "/checkout", "destination": "/build/checkout.html" },
+    { "source": "/cart", "destination": "/build/account.html" },
+    { "source": "/tracking", "destination": "/build/account.html" },
+    { "source": "/admin", "destination": "/build/admin.html" },
+    { "source": "/about", "destination": "/build/about.html" },
+    { "source": "/contact", "destination": "/build/contact.html" },
+    { "source": "/shipping", "destination": "/build/shipping.html" },
+    { "source": "/returns", "destination": "/build/returns.html" },
+    { "source": "/warranty", "destination": "/build/warranty.html" },
+    { "source": "/privacy", "destination": "/build/privacy.html" },
+    { "source": "/terms", "destination": "/build/terms.html" },
+    { "source": "/faq", "destination": "/build/content.html" },
+    { "source": "/testimonials", "destination": "/build/content.html" },
+    { "source": "/newsletter", "destination": "/build/content.html" },
+    { "source": "/", "destination": "/build/home.html" }
   ]
 }
