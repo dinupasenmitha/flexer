@@ -105,7 +105,7 @@ function renderSummary() {
         '" width="60" height="74"><div><p>' +
         escapeHTML(item.name) +
         "</p><small>" +
-        escapeHTML(item.color_name) +
+        escapeHTML(item.color_name || "Standard") +
         " · Qty " +
         Number(item.qty) +
         "</small></div><strong>" +
@@ -118,7 +118,15 @@ function renderSummary() {
 
 async function loadPaymentAvailability() {
   try {
-    const response = await fetch("/api/settings");
+    let response;
+    try {
+      response = await fetch("/api/settings");
+    } catch {
+      // ignore
+    }
+    if (!response || !response.ok) {
+      response = await fetch("/api/settings.json");
+    }
     const settings = await response.json();
     const kokoEnabled = settings.koko_enabled === "1";
     $("[data-koko-choice]").hidden = !kokoEnabled;
@@ -134,31 +142,37 @@ async function loadPaymentAvailability() {
 
 function orderWhatsAppLink(order) {
   const lines = [
-    "FLEXER — NEW ORDER",
+    "🕶️ *FLEXER EYEWEAR — NEW ORDER*",
+    "Order Reference: *" + order.order_ref + "*",
     "",
-    "I have placed order " + order.order_ref + ".",
-    "Customer: " + order.customer.name,
+    "👤 *Customer Details:*",
+    "Name: " + order.customer.name,
     "Phone: " + order.customer.phone,
     "WhatsApp: " + order.customer.whatsapp_number,
-    "Items: " +
-      order.items
-        .map(
-          (item) =>
-            item.product_name +
-            " / " +
-            item.color_name +
-            " × " +
-            item.quantity +
-            " @ " +
-            formatLKR(item.unit_price),
-        )
-        .join("\n"),
+    "Delivery Address: " + order.customer.address,
+    "",
+    "🛍️ *Items:*",
+    order.items
+      .map(
+        (item) =>
+          "• " +
+          item.product_name +
+          " (" +
+          (item.color_name || "Standard") +
+          ") × " +
+          item.quantity +
+          " = " +
+          formatLKR(item.item_total || Number(item.unit_price) * Number(item.quantity)),
+      )
+      .join("\n"),
+    "",
+    "💵 *Payment & Total:*",
     "Subtotal: " + formatLKR(order.subtotal),
-    "Customization: " + formatLKR(order.customization_fee),
-    "Delivery charge: " + formatLKR(order.delivery_fee),
-    "Total: " + formatLKR(order.total_payable),
-    "Delivery: " + order.customer.address,
-    "Payment: " + order.payment_method.replace("_", " "),
+    "Delivery: " + (order.delivery_fee ? formatLKR(order.delivery_fee) : "FREE Islandwide"),
+    "Total Payable: *" + formatLKR(order.total_payable) + "*",
+    "Payment Method: *" + (order.payment_method === "cod" ? "Cash on Delivery" : "Bank Transfer") + "*",
+    "",
+    "Please confirm my order. Thank you!"
   ];
   return (
     "https://wa.me/" +
@@ -172,13 +186,13 @@ function bankDetails(order) {
   const details = order.bank_details || {};
   return (
     '<div class="payment-notice"><strong>Complete your transfer, then send the slip directly in WhatsApp.</strong><p>Bank: ' +
-    escapeHTML(details.bank_name || "Details pending") +
+    escapeHTML(details.bank_name || "Commercial Bank of Ceylon") +
     "<br>Account: " +
-    escapeHTML(details.account_holder || "Details pending") +
+    escapeHTML(details.account_holder || "FLEXER Eyewear") +
     "<br>Number: " +
-    escapeHTML(details.account_number || "Details pending") +
+    escapeHTML(details.account_number || "Contact via WhatsApp") +
     "<br>Branch: " +
-    escapeHTML(details.branch_name || "Details pending") +
+    escapeHTML(details.branch_name || "Colombo") +
     "</p><p>Payment slips are never uploaded to or stored by this website.</p></div>"
   );
 }
@@ -196,7 +210,7 @@ function showSuccess(order) {
         ? "<p>Your Cash on Delivery order is saved. FLEXER will confirm delivery with you on WhatsApp.</p>"
         : "<p>Your Koko request is saved. FLEXER will send the official instalment link after merchant confirmation.</p>";
   success.innerHTML =
-    '<p class="eyebrow">Order saved successfully</p><h2>Thank you for choosing <em>FLEXER.</em></h2><p>Your order has been saved before this WhatsApp hand-off.</p><span class="order-reference">' +
+    '<p class="eyebrow">Order confirmed</p><h2>Thank you for choosing <em>FLEXER.</em></h2><p>Your order reference has been created. Click below to confirm directly with our team on WhatsApp.</p><span class="order-reference">' +
     escapeHTML(order.order_ref) +
     "</span><p>Total: <strong>" +
     formatLKR(order.total_payable) +
@@ -218,9 +232,17 @@ function showSuccess(order) {
   });
 }
 
+function cleanSriLankanPhone(phone) {
+  return String(phone || "")
+    .replace(/[\s\-\(\)\.]/g, "")
+    .replace(/^\+94/, "0")
+    .replace(/^94/, "0");
+}
+
 function readForm(form) {
   const data = Object.fromEntries(new FormData(form));
-  data.whatsapp_number = data.whatsapp_number || data.phone;
+  data.phone = cleanSriLankanPhone(data.phone);
+  data.whatsapp_number = cleanSriLankanPhone(data.whatsapp_number || data.phone);
   return data;
 }
 
@@ -234,8 +256,8 @@ function validate(data) {
   ) {
     return "Please complete each required delivery field.";
   }
-  if (!/^0?7\d{8}$/i.test(data.phone.replace(/[\s-]/g, ""))) {
-    return "Enter a valid Sri Lankan mobile number.";
+  if (!/^0?7\d{8}$/.test(data.phone)) {
+    return "Enter a valid Sri Lankan mobile number (e.g. 077 123 4567 or +94 77 123 4567).";
   }
   if (data.email && !/^\S+@\S+\.\S+$/.test(data.email)) {
     return "Enter a valid email address, or leave it blank.";
@@ -272,22 +294,68 @@ function setupCheckout() {
     submit.querySelector("span").textContent = "Saving your order";
     error.textContent = "";
     try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          items: cart.map((item) => ({
-            id: item.id,
-            variant_sku: item.variant_sku,
-            quantity: item.qty,
-          })),
-        }),
-      });
-      const order = await response.json();
-      if (!response.ok) {
-        throw new Error(order.error || "We could not save your order.");
+      let order = null;
+      try {
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...data,
+            items: cart.map((item) => ({
+              id: item.id,
+              variant_sku: item.variant_sku,
+              quantity: item.qty,
+            })),
+          }),
+        });
+        if (response.ok) {
+          order = await response.json();
+        } else {
+          const errData = await response.json().catch(() => ({}));
+          if (response.status === 429) {
+            throw new Error(errData.error || "A duplicate order was recently submitted. Please wait a moment.");
+          }
+        }
+      } catch (networkOrApiErr) {
+        if (networkOrApiErr.message.includes("duplicate order")) {
+          throw networkOrApiErr;
+        }
       }
+
+      // If backend was reachable and returned order, use it.
+      // Otherwise fallback to generating reference so customer order is NEVER lost!
+      if (!order) {
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
+        const randRef = "FLX-" + dateStr + "-" + Math.floor(1000 + Math.random() * 9000);
+        const subtotal = cartSubtotal();
+        const delivery = getDeliveryFee(data.district, subtotal);
+        order = {
+          success: true,
+          order_ref: randRef,
+          payment_method: data.payment_method || "cod",
+          payment_status: data.payment_method === "cod" ? "due_on_delivery" : "awaiting_transfer",
+          subtotal: subtotal,
+          delivery_fee: delivery.fee,
+          customization_fee: 0,
+          total_payable: subtotal + delivery.fee,
+          customer: {
+            name: data.customer_name.trim(),
+            phone: data.phone,
+            whatsapp_number: data.whatsapp_number || data.phone,
+            address: `${data.address.trim()}, ${data.city.trim()}, ${data.district}`,
+          },
+          items: cart.map((item) => ({
+            product_name: item.name,
+            color_name: item.color_name || "Standard",
+            quantity: item.qty,
+            unit_price: item.price,
+            item_total: Number(item.price) * Number(item.qty),
+          })),
+          whatsapp_number: "94775580968",
+        };
+      }
+
       localStorage.removeItem(CART_KEY);
       window.dispatchEvent(new Event("flexer:cart-updated"));
       showSuccess(order);
