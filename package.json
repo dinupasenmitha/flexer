@@ -3,9 +3,12 @@
   "version": "2.0.0",
   "description": "FLEXER Luxury Eyewear Full-Stack Ecommerce Platform",
   "main": "server/server.js",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "node server/server.js",
-    "build": "npm run design:build && node tools/export_static.js",
+    "build": "npm run design:build && node tools/build_static.js",
     "dev": "node --watch server/server.js",
     "pretest": "npm run design:build",
     "test": "node --test tests/ecommerce.test.js",
