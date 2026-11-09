@@ -406,9 +406,17 @@ async function loadFeaturedProducts() {
     return;
   }
   try {
-    const response = await fetch("/api/products", {
-      headers: { Accept: "application/json" },
-    });
+    let response;
+    try {
+      response = await fetch("/api/products", {
+        headers: { Accept: "application/json" },
+      });
+    } catch {
+      // ignore
+    }
+    if (!response || !response.ok) {
+      response = await fetch("/api/products.json");
+    }
     if (!response.ok) {
       throw new Error("Catalogue unavailable");
     }

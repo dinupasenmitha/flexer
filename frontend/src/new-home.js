@@ -10,7 +10,15 @@ mountCommerceShell();
 const host = document.querySelector("[data-home-products]");
 async function loadProducts() {
   try {
-    const response = await fetch("/api/products");
+    let response;
+    try {
+      response = await fetch("/api/products");
+    } catch {
+      // ignore
+    }
+    if (!response || !response.ok) {
+      response = await fetch("/api/products.json");
+    }
     if (!response.ok) {
       throw new Error();
     }

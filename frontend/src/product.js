@@ -288,13 +288,31 @@ async function init() {
     return;
   }
   try {
-    const response = await fetch(
-      "/api/products/" + encodeURIComponent(identifier),
-    );
-    if (!response.ok) {
-      throw new Error();
+    let response;
+    try {
+      response = await fetch("/api/products/" + encodeURIComponent(identifier));
+    } catch {
+      // ignore
     }
-    product = await response.json();
+    if (response && response.ok) {
+      product = await response.json();
+    } else {
+      // Fallback: load from static products.json
+      const staticRes = await fetch("/api/products.json");
+      if (!staticRes.ok) throw new Error("Could not load catalogue");
+      const allProducts = await staticRes.json();
+      product = allProducts.find(
+        (p) => p.slug === identifier || String(p.id) === String(identifier)
+      );
+      if (!product) throw new Error("Frame not found");
+      product.related = allProducts
+        .filter(
+          (p) =>
+            p.id !== product.id &&
+            (p.category === product.category || p.product_type === product.product_type)
+        )
+        .slice(0, 3);
+    }
     variant =
       product.variants?.find(
         (item) => item.is_available && Number(item.stock_quantity) > 0,
