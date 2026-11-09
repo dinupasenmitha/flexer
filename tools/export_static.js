@@ -54,45 +54,59 @@ settings.koko_enabled = '0';
 const faqs = db.prepare("SELECT id,kind,title,body,product_name,rating,created_at FROM content_entries WHERE kind = 'faq' AND published = 1 ORDER BY id DESC").all();
 const reviews = db.prepare("SELECT id,kind,title,body,product_name,rating,created_at FROM content_entries WHERE kind = 'review' AND published = 1 ORDER BY id DESC").all();
 
-const deployDir = path.join(__dirname, '..', 'deploy', 'api');
-fs.mkdirSync(path.join(deployDir, 'content'), { recursive: true });
-fs.mkdirSync(path.join(deployDir, 'products'), { recursive: true });
+const targetDirs = [
+  path.join(__dirname, '..', 'public', 'api'),
+  path.join(__dirname, '..', 'deploy', 'api')
+];
 
-// 1. All products list
-const productsJson = JSON.stringify(products);
-fs.writeFileSync(path.join(deployDir, 'products.json'), productsJson);
-fs.writeFileSync(path.join(deployDir, 'products', 'index.json'), productsJson);
+targetDirs.forEach(deployDir => {
+  fs.mkdirSync(path.join(deployDir, 'content'), { recursive: true });
+  fs.mkdirSync(path.join(deployDir, 'products'), { recursive: true });
 
-// 2. Settings
-const settingsJson = JSON.stringify(settings);
-fs.writeFileSync(path.join(deployDir, 'settings.json'), settingsJson);
-fs.writeFileSync(path.join(deployDir, 'settings'), settingsJson);
+  // 1. All products list
+  const productsJson = JSON.stringify(products);
+  fs.writeFileSync(path.join(deployDir, 'products.json'), productsJson);
+  fs.writeFileSync(path.join(deployDir, 'products', 'index.json'), productsJson);
 
-// 3. Health
-const healthJson = JSON.stringify({ status: 'healthy', brand: 'FLEXER', version: '2.0.0' });
-fs.writeFileSync(path.join(deployDir, 'health.json'), healthJson);
-fs.writeFileSync(path.join(deployDir, 'health'), healthJson);
+  // 2. Settings
+  const settingsJson = JSON.stringify(settings);
+  fs.writeFileSync(path.join(deployDir, 'settings.json'), settingsJson);
+  fs.writeFileSync(path.join(deployDir, 'settings'), settingsJson);
 
-// 4. Individual products by ID and by SLUG
-products.forEach(p => {
-  const related = products
-    .filter(r => r.id !== p.id && (r.category === p.category || r.product_type === p.product_type))
-    .slice(0, 3);
-  const detail = JSON.stringify({ ...p, related });
+  // 3. Health
+  const healthJson = JSON.stringify({ status: 'healthy', brand: 'FLEXER', version: '2.0.0' });
+  fs.writeFileSync(path.join(deployDir, 'health.json'), healthJson);
+  fs.writeFileSync(path.join(deployDir, 'health'), healthJson);
 
-  // by ID
-  fs.writeFileSync(path.join(deployDir, 'products', p.id + '.json'), detail);
-  fs.writeFileSync(path.join(deployDir, 'products', String(p.id)), detail);
+  // 4. Individual products by ID and by SLUG
+  products.forEach(p => {
+    const related = products
+      .filter(r => r.id !== p.id && (r.category === p.category || r.product_type === p.product_type))
+      .slice(0, 3);
+    const detail = JSON.stringify({ ...p, related });
 
-  // by SLUG
-  if (p.slug) {
-    fs.writeFileSync(path.join(deployDir, 'products', p.slug + '.json'), detail);
-    fs.writeFileSync(path.join(deployDir, 'products', p.slug), detail);
-  }
+    // by ID
+    fs.writeFileSync(path.join(deployDir, 'products', p.id + '.json'), detail);
+    fs.writeFileSync(path.join(deployDir, 'products', String(p.id)), detail);
+
+    // by SLUG
+    if (p.slug) {
+      fs.writeFileSync(path.join(deployDir, 'products', p.slug + '.json'), detail);
+      fs.writeFileSync(path.join(deployDir, 'products', p.slug), detail);
+    }
+  });
+
+  // 5. Content
+  fs.writeFileSync(path.join(deployDir, 'content', 'faq.json'), JSON.stringify(faqs));
+  fs.writeFileSync(path.join(deployDir, 'content', 'review.json'), JSON.stringify(reviews));
 });
 
-// 5. Content
-fs.writeFileSync(path.join(deployDir, 'content', 'faq.json'), JSON.stringify(faqs));
-fs.writeFileSync(path.join(deployDir, 'content', 'review.json'), JSON.stringify(reviews));
+// Sync index.html with new built homepage
+const homeBuild = path.join(__dirname, '..', 'public', 'build', 'home.html');
+const indexTarget = path.join(__dirname, '..', 'public', 'index.html');
+if (fs.existsSync(homeBuild)) {
+  fs.copyFileSync(homeBuild, indexTarget);
+  console.log('Synchronized public/index.html with public/build/home.html');
+}
 
-console.log('Successfully exported ' + products.length + ' products with variants, images, and slugs!');
+console.log('Successfully exported ' + products.length + ' products with variants to public/api and deploy/api!');

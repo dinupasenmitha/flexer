@@ -1,0 +1,28 @@
+# API Endpoints (Forced JSON responses)
+/api/products           /api/products.json          200!
+/api/products/*         /api/products/:splat.json   200!
+/api/settings           /api/settings.json          200!
+/api/health             /api/health.json            200!
+/api/content            /api/content/faq.json       200!
+
+# Clean Storefront HTML Routes (Forced to built pages)
+/shop                   /build/shop.html            200!
+/budget                 /build/shop.html            200!
+/premium                /build/shop.html            200!
+/branded                /build/shop.html            200!
+/product/*              /build/product.html         200!
+/checkout               /build/checkout.html        200!
+/cart                   /build/account.html         200!
+/tracking               /build/account.html         200!
+/admin                  /build/admin.html           200!
+/about                  /build/about.html           200!
+/contact                /build/contact.html         200!
+/shipping               /build/shipping.html        200!
+/returns                /build/returns.html         200!
+/warranty               /build/warranty.html        200!
+/privacy                /build/privacy.html         200!
+/terms                  /build/terms.html           200!
+/faq                    /build/content.html         200!
+/testimonials           /build/content.html         200!
+/newsletter             /build/content.html         200!
+/                       /build/home.html            200!

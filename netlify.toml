@@ -1,5 +1,5 @@
 [build]
-  command = "npm run design:build"
+  command = "npm run build"
   publish = "public"
   functions = "netlify/functions"
 
@@ -16,113 +16,130 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# All API requests go to the serverless function
+# All API requests
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/server/api/:splat"
   status = 200
   force = true
 
-# HTML page routes (these don't have a physical file in public/)
-# so they MUST go through the Express function.
-# force = false means Netlify checks for a static file first.
-
+# Clean HTML page routes forced to built files
 [[redirects]]
   from = "/"
-  to = "/.netlify/functions/server/"
+  to = "/build/home.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/shop"
-  to = "/.netlify/functions/server/shop"
+  to = "/build/shop.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/product/*"
-  to = "/.netlify/functions/server/product/:splat"
+  to = "/build/product.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/budget"
-  to = "/.netlify/functions/server/budget"
+  to = "/build/shop.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/premium"
-  to = "/.netlify/functions/server/premium"
+  to = "/build/shop.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/branded"
-  to = "/.netlify/functions/server/branded"
+  to = "/build/shop.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/checkout"
-  to = "/.netlify/functions/server/checkout"
+  to = "/build/checkout.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/cart"
-  to = "/.netlify/functions/server/cart"
+  to = "/build/account.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/tracking"
-  to = "/.netlify/functions/server/tracking"
+  to = "/build/account.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/admin"
-  to = "/.netlify/functions/server/admin"
+  to = "/build/admin.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/about"
-  to = "/.netlify/functions/server/about"
+  to = "/build/about.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/contact"
-  to = "/.netlify/functions/server/contact"
+  to = "/build/contact.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/shipping"
-  to = "/.netlify/functions/server/shipping"
+  to = "/build/shipping.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/returns"
-  to = "/.netlify/functions/server/returns"
+  to = "/build/returns.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/warranty"
-  to = "/.netlify/functions/server/warranty"
+  to = "/build/warranty.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/privacy"
-  to = "/.netlify/functions/server/privacy"
+  to = "/build/privacy.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/terms"
-  to = "/.netlify/functions/server/terms"
+  to = "/build/terms.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/faq"
-  to = "/.netlify/functions/server/faq"
+  to = "/build/content.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/testimonials"
-  to = "/.netlify/functions/server/testimonials"
+  to = "/build/content.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/newsletter"
-  to = "/.netlify/functions/server/newsletter"
+  to = "/build/content.html"
   status = 200
+  force = true
