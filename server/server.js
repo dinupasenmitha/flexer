@@ -135,8 +135,8 @@ app.use((err, req, res, next) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`[FLEXER Server] Running on http://localhost:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[FLEXER Server] Running on port ${PORT}`);
     console.log(`[FLEXER Server] Admin URL: http://localhost:${PORT}/admin`);
   });
 }

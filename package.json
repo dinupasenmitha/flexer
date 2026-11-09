@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
+    "build": "npm run design:build",
     "dev": "node --watch server/server.js",
     "pretest": "npm run design:build",
     "test": "node --test tests/ecommerce.test.js",
