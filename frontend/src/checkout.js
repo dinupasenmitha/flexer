@@ -162,17 +162,22 @@ function orderWhatsAppLink(order) {
           ") × " +
           item.quantity +
           " = " +
-          formatLKR(item.item_total || Number(item.unit_price) * Number(item.quantity)),
+          formatLKR(
+            item.item_total || Number(item.unit_price) * Number(item.quantity),
+          ),
       )
       .join("\n"),
     "",
     "💵 *Payment & Total:*",
     "Subtotal: " + formatLKR(order.subtotal),
-    "Delivery: " + (order.delivery_fee ? formatLKR(order.delivery_fee) : "FREE Islandwide"),
+    "Delivery: " +
+      (order.delivery_fee ? formatLKR(order.delivery_fee) : "FREE Islandwide"),
     "Total Payable: *" + formatLKR(order.total_payable) + "*",
-    "Payment Method: *" + (order.payment_method === "cod" ? "Cash on Delivery" : "Bank Transfer") + "*",
+    "Payment Method: *" +
+      (order.payment_method === "cod" ? "Cash on Delivery" : "Bank Transfer") +
+      "*",
     "",
-    "Please confirm my order. Thank you!"
+    "Please confirm my order. Thank you!",
   ];
   return (
     "https://wa.me/" +
@@ -242,7 +247,9 @@ function cleanSriLankanPhone(phone) {
 function readForm(form) {
   const data = Object.fromEntries(new FormData(form));
   data.phone = cleanSriLankanPhone(data.phone);
-  data.whatsapp_number = cleanSriLankanPhone(data.whatsapp_number || data.phone);
+  data.whatsapp_number = cleanSriLankanPhone(
+    data.whatsapp_number || data.phone,
+  );
   return data;
 }
 
@@ -294,67 +301,36 @@ function setupCheckout() {
     submit.querySelector("span").textContent = "Saving your order";
     error.textContent = "";
     try {
-      let order = null;
-      try {
-        const response = await fetch("/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...data,
-            items: cart.map((item) => ({
-              id: item.id,
-              variant_sku: item.variant_sku,
-              quantity: item.qty,
-            })),
-          }),
-        });
-        if (response.ok) {
-          order = await response.json();
-        } else {
-          const errData = await response.json().catch(() => ({}));
-          if (response.status === 429) {
-            throw new Error(errData.error || "A duplicate order was recently submitted. Please wait a moment.");
-          }
-        }
-      } catch (networkOrApiErr) {
-        if (networkOrApiErr.message.includes("duplicate order")) {
-          throw networkOrApiErr;
-        }
-      }
-
-      // If backend was reachable and returned order, use it.
-      // Otherwise fallback to generating reference so customer order is NEVER lost!
-      if (!order) {
-        const now = new Date();
-        const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
-        const randRef = "FLX-" + dateStr + "-" + Math.floor(1000 + Math.random() * 9000);
-        const subtotal = cartSubtotal();
-        const delivery = getDeliveryFee(data.district, subtotal);
-        order = {
-          success: true,
-          order_ref: randRef,
-          payment_method: data.payment_method || "cod",
-          payment_status: data.payment_method === "cod" ? "due_on_delivery" : "awaiting_transfer",
-          subtotal: subtotal,
-          delivery_fee: delivery.fee,
-          customization_fee: 0,
-          total_payable: subtotal + delivery.fee,
-          customer: {
-            name: data.customer_name.trim(),
-            phone: data.phone,
-            whatsapp_number: data.whatsapp_number || data.phone,
-            address: `${data.address.trim()}, ${data.city.trim()}, ${data.district}`,
-          },
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
           items: cart.map((item) => ({
-            product_name: item.name,
-            color_name: item.color_name || "Standard",
+            id: item.id,
+            variant_sku: item.variant_sku,
             quantity: item.qty,
-            unit_price: item.price,
-            item_total: Number(item.price) * Number(item.qty),
           })),
-          whatsapp_number: "94775580968",
-        };
+        }),
+      }).catch(() => {
+        throw new Error(
+          "We could not reach the order service. Your bag is safe—please check your connection and try again.",
+        );
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(
+          result.error ||
+            "We could not save your order. Your bag is safe—please try again.",
+        );
       }
+      if (!result.order_ref || !result.success) {
+        throw new Error(
+          "The order service returned an incomplete confirmation. Your bag is safe—please try again.",
+        );
+      }
+      const order = result;
 
       localStorage.removeItem(CART_KEY);
       window.dispatchEvent(new Event("flexer:cart-updated"));

@@ -299,17 +299,22 @@ async function init() {
     } else {
       // Fallback: load from static products.json
       const staticRes = await fetch("/api/products.json");
-      if (!staticRes.ok) throw new Error("Could not load catalogue");
+      if (!staticRes.ok) {
+        throw new Error("Could not load catalogue");
+      }
       const allProducts = await staticRes.json();
       product = allProducts.find(
-        (p) => p.slug === identifier || String(p.id) === String(identifier)
+        (p) => p.slug === identifier || String(p.id) === String(identifier),
       );
-      if (!product) throw new Error("Frame not found");
+      if (!product) {
+        throw new Error("Frame not found");
+      }
       product.related = allProducts
         .filter(
           (p) =>
             p.id !== product.id &&
-            (p.category === product.category || p.product_type === product.product_type)
+            (p.category === product.category ||
+              p.product_type === product.product_type),
         )
         .slice(0, 3);
     }

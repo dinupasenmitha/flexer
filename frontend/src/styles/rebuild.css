@@ -163,7 +163,9 @@ h3 em {
   gap: 8px;
   text-decoration: none;
   color: #000000;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
   user-select: none;
   width: auto;
 }
@@ -321,7 +323,9 @@ h3 em {
   height: 1.5px;
   background: currentColor;
   border-radius: 1px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 .commerce-menu-toggle[aria-expanded="true"] .menu-icon span:first-child {
   transform: translateY(2.75px) rotate(45deg);

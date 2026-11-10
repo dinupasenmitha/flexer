@@ -10,8 +10,14 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Route API endpoints
-RewriteRule ^api/(.*)$ api.php?$1 [QSA,L]
+# The legacy PHP bridge is intentionally disabled. Production commerce and
+# administration must run through the supported Node service documented in the
+# repository README; serving the old bridge would bypass current auth controls.
+RewriteRule ^api(?:/.*)?$ - [R=404,L]
+
+<Files "api.php">
+  Require all denied
+</Files>
 
 # Clean storefront routes
 RewriteRule ^shop/?$ build/shop.html [L]

@@ -71,7 +71,7 @@ test('Stock zero and unavailable variants survive updates; failed updates roll b
   const failed = await fetch(baseUrl + '/api/products/1', {
     method: 'PUT', headers: adminHeaders, body: JSON.stringify({ name: 'Should roll back', variants: [{ ...variant, sku: foreign.sku }] })
   });
-  assert.strictEqual(failed.status, 500);
+  assert.strictEqual(failed.status, 409);
   assert.strictEqual(db.prepare('SELECT name FROM products WHERE id = 1').get().name, product.name);
   assert.strictEqual(db.prepare('SELECT stock_quantity FROM product_variants WHERE product_id = 1').get().stock_quantity, 0);
   // Restore the fixture needed by the checkout tests.
@@ -104,6 +104,9 @@ test('public routes serve built pages with security headers and no public admin 
 
   const admin = await (await fetch(`${baseUrl}/admin`)).text();
   assert.match(admin, /noindex,nofollow/i, 'Admin must be excluded from search indexing');
+
+  const legacyPhp = await fetch(`${baseUrl}/api.php`);
+  assert.strictEqual(legacyPhp.status, 404, 'Legacy PHP source must never be served publicly');
 });
 
 // 2. Product Catalogue
@@ -137,6 +140,35 @@ test('GET /api/settings exposes only storefront-safe settings', async () => {
   assert.ok(settings.whatsapp_number);
   assert.strictEqual(settings.bank_account_number, undefined);
   assert.strictEqual(settings.koko_merchant_id, undefined);
+});
+
+test('Admin cannot enable Koko before the verified provider adapter exists', async () => {
+  const response = await fetch(`${baseUrl}/api/settings`, {
+    method: 'PUT',
+    headers: adminHeaders,
+    body: JSON.stringify({ koko_enabled: '1' })
+  });
+  assert.strictEqual(response.status, 400);
+  assert.match((await response.json()).error, /cannot be enabled/i);
+  assert.strictEqual(db.prepare("SELECT value FROM settings WHERE key = 'koko_enabled'").get().value, '0');
+});
+
+test('Public order creation rejects oversized customer input', async () => {
+  const response = await fetch(`${baseUrl}/api/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      customer_name: 'X'.repeat(121),
+      phone: uniquePhone(),
+      address: '1 Test Lane',
+      city: 'Colombo',
+      district: 'Colombo',
+      payment_method: 'cod',
+      items: [{ id: 1, qty: 1 }]
+    })
+  });
+  assert.strictEqual(response.status, 400);
+  assert.match((await response.json()).error, /too long/i);
 });
 
 test('POST /api/orders rejects Koko before merchant credentials are enabled', async () => {

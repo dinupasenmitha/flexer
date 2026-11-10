@@ -84,8 +84,7 @@ export function mountBrandChrome(root) {
   }
 
   // Active page link state
-  const currentPath =
-    window.location.pathname.replace(/\/$/, "") || "/";
+  const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
   root
     .querySelectorAll(".commerce-nav a, .commerce-mobile-nav a")
     .forEach((link) => {
@@ -149,9 +148,10 @@ export function mountBrandChrome(root) {
         bar.textContent = settings.announcement_text;
         bar.hidden = false;
       }
-      const number = String(
-        settings.whatsapp_number || "94775580968",
-      ).replace(/\D/g, "");
+      const number = String(settings.whatsapp_number || "94775580968").replace(
+        /\D/g,
+        "",
+      );
       document.querySelectorAll("[data-support]").forEach((a) => {
         a.href = "https://wa.me/" + number;
       });
@@ -167,7 +167,8 @@ export function mountBrandChrome(root) {
           community.textContent = "Join the WhatsApp community ↗";
           const note = document.querySelector("[data-community-note]");
           if (note) {
-            note.textContent = "Collection announcements, straight to your phone.";
+            note.textContent =
+              "Collection announcements, straight to your phone.";
           }
         }
       }

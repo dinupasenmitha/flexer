@@ -27,13 +27,10 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const DB_PATH = path.join(DATA_DIR, 'flexer.db');
 
-// On Serverless cold start, seed the DB from the bundled copy if it doesn't exist in /tmp
-if (IS_SERVERLESS && !fs.existsSync(DB_PATH)) {
-  const seedDb = path.join(__dirname, '..', 'data', 'flexer.db');
-  if (fs.existsSync(seedDb)) {
-    fs.copyFileSync(seedDb, DB_PATH);
-  }
-}
+// Serverless preview instances start from the code-defined catalogue instead of
+// copying the repository database, which may contain local merchant records.
+// Their filesystems remain ephemeral, so production commerce must use durable
+// storage as documented in README.md.
 
 const db = new Database(DB_PATH);
 

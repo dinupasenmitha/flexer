@@ -149,7 +149,12 @@ body:has(:focus-visible) .brand-intro {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.74) 48%, rgba(0, 0, 0, 0.25) 90%),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.74) 48%,
+      rgba(0, 0, 0, 0.25) 90%
+    ),
     linear-gradient(0deg, rgba(0, 0, 0, 0.88) 0%, transparent 35%);
   pointer-events: none;
 }

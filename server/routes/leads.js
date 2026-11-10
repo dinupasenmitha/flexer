@@ -13,7 +13,7 @@ const { requireAdmin } = require('../auth');
 router.post('/newsletter', (req, res) => {
   try {
     const { email } = req.body;
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    if (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       return res.status(400).json({ error: 'Please enter a valid email address' });
     }
 
@@ -49,9 +49,9 @@ router.get('/newsletter', requireAdmin, (req, res) => {
 router.post('/contacts', (req, res) => {
   try {
     const { name, phone, message } = req.body;
-    if (!name || !name.trim()) return res.status(400).json({ error: 'Name is required' });
-    if (!phone || !phone.trim()) return res.status(400).json({ error: 'Phone / WhatsApp is required' });
-    if (!message || !message.trim()) return res.status(400).json({ error: 'Message is required' });
+    if (typeof name !== 'string' || !name.trim() || name.length > 120) return res.status(400).json({ error: 'Enter a valid name' });
+    if (typeof phone !== 'string' || !phone.trim() || phone.length > 32 || !/^\+?[\d\s().-]{9,32}$/.test(phone)) return res.status(400).json({ error: 'Enter a valid phone / WhatsApp number' });
+    if (typeof message !== 'string' || !message.trim() || message.length > 4000) return res.status(400).json({ error: 'Enter a message up to 4,000 characters' });
 
     const now = new Date().toISOString();
     db.prepare(`

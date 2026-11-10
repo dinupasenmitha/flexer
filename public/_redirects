@@ -1,10 +1,3 @@
-# API Endpoints (Forced JSON responses)
-/api/products           /api/products.json          200!
-/api/products/*         /api/products/:splat.json   200!
-/api/settings           /api/settings.json          200!
-/api/health             /api/health.json            200!
-/api/content            /api/content/faq.json       200!
-
 # Clean Storefront HTML Routes (Forced to built pages)
 /shop                   /build/shop.html            200!
 /budget                 /build/shop.html            200!

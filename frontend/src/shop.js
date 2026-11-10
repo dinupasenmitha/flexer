@@ -85,23 +85,38 @@ function makeCard(product) {
 
 function render() {
   const grid = $("[data-catalogue-grid]");
-  const filtered = state.products.filter((product) => {
-    if (state.category !== "all" && product.category !== state.category) return false;
-    if (state.type !== "all" && product.product_type !== state.type) return false;
-    if (state.search) {
-      const q = state.search.toLowerCase();
-      const match = (product.name || "").toLowerCase().includes(q) ||
-                    (product.description || "").toLowerCase().includes(q) ||
-                    (product.brand || "").toLowerCase().includes(q);
-      if (!match) return false;
-    }
-    return Number(product.price) <= state.maxPrice;
-  }).sort((a, b) => {
-    if (state.sort === "price-asc") return Number(a.price) - Number(b.price);
-    if (state.sort === "price-desc") return Number(b.price) - Number(a.price);
-    if (state.sort === "name") return (a.name || "").localeCompare(b.name || "");
-    return 0;
-  });
+  const filtered = state.products
+    .filter((product) => {
+      if (state.category !== "all" && product.category !== state.category) {
+        return false;
+      }
+      if (state.type !== "all" && product.product_type !== state.type) {
+        return false;
+      }
+      if (state.search) {
+        const q = state.search.toLowerCase();
+        const match =
+          (product.name || "").toLowerCase().includes(q) ||
+          (product.description || "").toLowerCase().includes(q) ||
+          (product.brand || "").toLowerCase().includes(q);
+        if (!match) {
+          return false;
+        }
+      }
+      return Number(product.price) <= state.maxPrice;
+    })
+    .sort((a, b) => {
+      if (state.sort === "price-asc") {
+        return Number(a.price) - Number(b.price);
+      }
+      if (state.sort === "price-desc") {
+        return Number(b.price) - Number(a.price);
+      }
+      if (state.sort === "name") {
+        return (a.name || "").localeCompare(b.name || "");
+      }
+      return 0;
+    });
   $("[data-product-count]").textContent =
     filtered.length +
     " frame" +

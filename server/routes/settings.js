@@ -51,10 +51,6 @@ router.get('/', (req, res) => {
     // A legacy enabled flag alone must never expose Koko in the storefront.
     // The payment option becomes available only after both activation and the
     // merchant values required for a real provider connection are configured.
-    const values = Object.fromEntries(rows.map(row => [row.key, row.value]));
-    const hasMerchantCredentials = values.koko_merchant_id &&
-      values.koko_merchant_id !== 'PENDING_MERCHANT_CREDENTIALS' &&
-      values.koko_api_key;
     // Credentials alone cannot activate an unverified provider adapter.
     settings.koko_enabled = '0';
 
@@ -86,6 +82,11 @@ router.put('/', requireAdmin, (req, res) => {
       }
       if (key === 'koko_enabled' && !['0', '1', 0, 1].includes(val)) {
         return res.status(400).json({ error: 'Koko enabled must be 0 or 1' });
+      }
+      if (key === 'koko_enabled' && String(val) === '1') {
+        return res.status(400).json({
+          error: 'Koko cannot be enabled until the official provider integration is approved and deployed'
+        });
       }
     }
 

@@ -8,7 +8,15 @@ const { db, verifyPassword } = require('./db');
 
 // An explicit environment secret keeps production sessions stable. A fresh
 // process-local fallback is safer than shipping a universally known signing key.
-const JWT_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex');
+const configuredSecret = process.env.JWT_SECRET?.trim();
+const insecureSecretValues = new Set([
+  'replace-with-a-cryptographically-secure-random-string-in-production',
+  'changeme'
+]);
+if (process.env.NODE_ENV === 'production' && (!configuredSecret || insecureSecretValues.has(configuredSecret))) {
+  throw new Error('JWT_SECRET must be configured with a private random value before starting in production');
+}
+const JWT_SECRET = configuredSecret || crypto.randomBytes(32).toString('hex');
 
 /**
  * Generate standard HMAC-SHA256 JWT

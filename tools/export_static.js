@@ -41,13 +41,14 @@ const products = rawProducts.map(p => {
 
 // Settings
 const settingsRows = db.prepare('SELECT key, value FROM settings').all();
-const settings = {};
-settingsRows.forEach(r => { settings[r.key] = r.value; });
-delete settings.bank_account_number;
-delete settings.bank_account_name;
-delete settings.bank_branch;
-delete settings.koko_merchant_id;
-delete settings.koko_merchant_secret;
+const publicSettingKeys = new Set([
+  'store_name', 'store_tagline', 'domain', 'currency', 'whatsapp_number',
+  'whatsapp_community_url', 'delivery_fee_islandwide', 'delivery_fee_policy',
+  'announcement_text'
+]);
+const settings = Object.fromEntries(
+  settingsRows.filter(row => publicSettingKeys.has(row.key)).map(row => [row.key, row.value])
+);
 settings.koko_enabled = '0';
 
 // FAQs & Reviews

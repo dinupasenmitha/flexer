@@ -576,9 +576,7 @@ async function renderSettings() {
       text("delivery_fee_islandwide") +
       '"></label><label>Announcement<input name="announcement_text" value="' +
       text("announcement_text") +
-      '"></label></div></fieldset><fieldset><legend>Koko merchant connection</legend><div class="admin-form__grid"><label class="admin-form__check"><input name="koko_enabled" type="checkbox"' +
-      (settings.koko_enabled === "1" ? " checked" : "") +
-      '> Enable Koko</label><label>Merchant ID<input name="koko_merchant_id" value="' +
+      '"></label></div></fieldset><fieldset><legend>Koko merchant connection</legend><div class="admin-form__grid"><label class="admin-form__check"><input name="koko_enabled" type="checkbox" disabled> Enable Koko</label><p class="admin-form__note">Koko remains disabled until the official provider adapter and merchant credentials have been approved and tested.</p><label>Merchant ID<input name="koko_merchant_id" value="' +
       text("koko_merchant_id") +
       '"></label><label>API key<input name="koko_api_key" type="password" value="' +
       text("koko_api_key") +

@@ -25,6 +25,9 @@
   ],
   "author": "FLEXER Eyewear",
   "license": "ISC",
+  "engines": {
+    "node": ">=24.7.0 <25"
+  },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",

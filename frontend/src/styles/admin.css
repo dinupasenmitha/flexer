@@ -326,6 +326,13 @@
 .admin-form__check input {
   min-height: auto;
 }
+.admin-form__note {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--admin-muted);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
 .admin-modal {
   position: fixed;
   z-index: 200;
@@ -397,14 +404,20 @@
 }
 @media (max-width: 700px) {
   .admin-app {
-    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: minmax(0, 1fr);
   }
   .admin-sidebar {
     position: static;
+    min-width: 0;
+    max-width: 100%;
     height: auto;
   }
   .admin-sidebar nav {
     display: flex;
+    min-width: 0;
+    max-width: 100%;
     overflow-x: auto;
   }
   .admin-sidebar nav button {
@@ -432,6 +445,8 @@
     grid-template-columns: 1fr;
   }
   .admin-workspace {
+    width: 100%;
+    max-width: 100%;
     padding: 1.25rem;
   }
   .admin-modal__card {

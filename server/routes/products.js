@@ -41,8 +41,9 @@ function validateProductInput(input, isNew = false) {
       if (!variant || typeof variant.color_name !== 'string' || !variant.color_name.trim()) return 'Each colour needs a name';
       if (!/^#[0-9a-f]{6}$/i.test(variant.color_hex || '')) return 'Each colour needs a six-digit hex value';
       if (!Number.isInteger(Number(variant.stock_quantity)) || Number(variant.stock_quantity) < 0) return 'Stock must be a non-negative integer';
-      if (variant.sku && seen.has(variant.sku)) return 'Variant SKUs must be unique';
-      if (variant.sku) seen.add(variant.sku);
+      const normalizedSku = String(variant.sku || '').trim().toUpperCase();
+      if (normalizedSku && seen.has(normalizedSku)) return 'Variant SKUs must be unique';
+      if (normalizedSku) seen.add(normalizedSku);
     }
   }
   return null;
@@ -61,7 +62,7 @@ router.post('/images', requireAdmin, (req, res) => {
   const fs = require('node:fs');
   const path = require('node:path');
   const filename = 'frame-' + require('node:crypto').randomUUID() + '.' + match[1];
-  const destination = path.join(__dirname, '../../public/uploads');
+  const destination = process.env.FLEXER_UPLOADS_DIR || path.join(__dirname, '../../public/uploads');
   fs.mkdirSync(destination, { recursive: true });
   fs.writeFileSync(path.join(destination, filename), bytes, { flag: 'wx' });
   return res.status(201).json({ path: '/uploads/' + filename });
@@ -290,7 +291,7 @@ router.post('/', requireAdmin, (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?)
       `);
       variants.forEach((v, idx) => {
-        const vSku = v.sku || `${sku}-V${idx + 1}`;
+        const vSku = String(v.sku || `${sku}-V${idx + 1}`).trim().toUpperCase();
         vStmt.run(inserted.id, vSku, v.color_name || 'Standard', v.color_hex || '#000000', v.image || primary_image, v.stock_quantity ?? 0, v.is_available === false || v.is_available === 0 ? 0 : 1);
       });
     }
@@ -301,8 +302,11 @@ router.post('/', requireAdmin, (req, res) => {
     res.status(201).json(formatProduct(newProd, true));
   } catch (err) {
     if (transactionOpen) db.exec('ROLLBACK');
-    console.error('Error creating product:', err);
-    res.status(500).json({ error: err.message || 'Failed to create product' });
+    const conflict = err.code?.startsWith('SQLITE_CONSTRAINT');
+    if (!conflict) console.error('Error creating product:', err);
+    res.status(conflict ? 409 : 500).json({
+      error: conflict ? 'A product or variant with that SKU already exists' : 'Failed to create product'
+    });
   }
 });
 
@@ -374,11 +378,13 @@ router.put('/:id', requireAdmin, (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?)
       `);
       variants.forEach((v, idx) => {
-        const vSku = v.sku || `${existing.sku}-V${idx + 1}`;
+        const vSku = String(v.sku || `${existing.sku}-V${idx + 1}`).trim().toUpperCase();
         // Check for SKU collision with other products
         const conflict = db.prepare('SELECT product_id FROM product_variants WHERE sku = ?').get(vSku);
         if (conflict && conflict.product_id !== Number(id)) {
-          throw new Error('Duplicate variant SKU across products');
+          const skuError = new Error('A variant with that SKU already belongs to another product');
+          skuError.statusCode = 409;
+          throw skuError;
         }
         vStmt.run(
           Number(id),
@@ -398,8 +404,11 @@ router.put('/:id', requireAdmin, (req, res) => {
     res.json(formatProduct(updated, true));
   } catch (err) {
     if (transactionOpen) db.exec('ROLLBACK');
-    console.error('Error updating product:', err);
-    res.status(500).json({ error: err.message || 'Failed to update product' });
+    const statusCode = err.statusCode || (err.code?.startsWith('SQLITE_CONSTRAINT') ? 409 : 500);
+    if (statusCode >= 500) console.error('Error updating product:', err);
+    res.status(statusCode).json({
+      error: statusCode === 409 ? (err.message || 'A product or variant with that SKU already exists') : 'Failed to update product'
+    });
   }
 });
 

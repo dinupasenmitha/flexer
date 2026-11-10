@@ -15,6 +15,42 @@ const SRI_LANKA_DISTRICTS = [
   'Monaragala', 'Ratnapura', 'Kegalle'
 ];
 
+const CUSTOMER_FIELD_LIMITS = {
+  customer_name: 120,
+  phone: 32,
+  whatsapp_number: 32,
+  email: 254,
+  address: 500,
+  city: 120,
+  district: 80,
+  postal_code: 20,
+  notes: 2000
+};
+
+function validateCustomerFields(values) {
+  for (const [field, maxLength] of Object.entries(CUSTOMER_FIELD_LIMITS)) {
+    const value = values[field];
+    if (value !== undefined && value !== null && typeof value !== 'string') {
+      return `${field.replaceAll('_', ' ')} must be text`;
+    }
+    if (typeof value === 'string' && value.length > maxLength) {
+      return `${field.replaceAll('_', ' ')} is too long`;
+    }
+  }
+  if (values.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+    return 'Enter a valid email address';
+  }
+  const phoneDigits = String(values.phone || '').replace(/\D/g, '');
+  if (phoneDigits.length < 9 || phoneDigits.length > 15) {
+    return 'Enter a valid contact phone number';
+  }
+  const whatsappDigits = String(values.whatsapp_number || values.phone || '').replace(/\D/g, '');
+  if (whatsappDigits.length < 9 || whatsappDigits.length > 15) {
+    return 'Enter a valid WhatsApp number';
+  }
+  return null;
+}
+
 // Return only status information after matching BOTH customer credentials.
 // This route is covered by the orders rate limiter and never returns addresses.
 router.post('/track', (req, res) => {
@@ -53,6 +89,13 @@ router.post('/', (req, res) => {
     } = req.body;
 
     // 1. Validation
+    const customerValidationError = validateCustomerFields({
+      customer_name, phone, whatsapp_number, email, address, city, district,
+      postal_code, notes
+    });
+    if (customerValidationError) {
+      return res.status(400).json({ error: customerValidationError });
+    }
     if (!customer_name || !customer_name.trim()) {
       return res.status(400).json({ error: 'Customer full name is required' });
     }
@@ -104,6 +147,9 @@ router.post('/', (req, res) => {
 
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'Shopping cart cannot be empty' });
+    }
+    if (items.length > 50) {
+      return res.status(400).json({ error: 'Shopping cart contains too many line items' });
     }
 
     // 2. Duplicate Submission Protection (60-second window on same customer & phone)
@@ -378,8 +424,10 @@ router.get('/', requireAdmin, (req, res) => {
       params.push(t, t, t, t);
     }
 
+    const safeLimit = Math.min(100, Math.max(1, Number.parseInt(limit, 10) || 50));
+    const safeOffset = Math.max(0, Number.parseInt(offset, 10) || 0);
     query += ' ORDER BY id DESC LIMIT ? OFFSET ?';
-    params.push(Number(limit), Number(offset));
+    params.push(safeLimit, safeOffset);
 
     const orders = db.prepare(query).all(...params);
 
@@ -408,7 +456,11 @@ router.get('/export.csv', requireAdmin, (req, res) => {
       FROM orders ORDER BY id DESC
     `).all();
     const columns = ['order_ref', 'customer_name', 'phone', 'email', 'address', 'city', 'district', 'payment_method', 'payment_status', 'order_status', 'total_payable', 'created_at'];
-    const quote = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
+    const quote = value => {
+      const text = String(value ?? '');
+      const spreadsheetSafe = /^[=+\-@]/.test(text) ? `'${text}` : text;
+      return `"${spreadsheetSafe.replace(/"/g, '""')}"`;
+    };
     const csv = [columns.join(','), ...rows.map(row => columns.map(key => quote(row[key])).join(','))].join('\n');
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', 'attachment; filename="flexer-orders.csv"');

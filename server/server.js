@@ -48,7 +48,7 @@ function rateLimiter(maxRequests = 30, windowMs = 60000) {
 }
 
 // Ensure Uploads Directory exists
-const UPLOADS_DIR = path.join(__dirname, '..', 'public', 'uploads');
+const UPLOADS_DIR = process.env.FLEXER_UPLOADS_DIR || path.join(__dirname, '..', 'public', 'uploads');
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
@@ -82,6 +82,11 @@ app.get('/api/health', (req, res) => {
 
 // Static Assets
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
+// Merchant-uploaded product photos can live on a persistent disk while bundled
+// catalogue assets continue to fall through to the public directory.
+app.use('/uploads', express.static(UPLOADS_DIR, { maxAge: '1h', index: false }));
+// Never serve legacy server-side source as a downloadable static file.
+app.get('/api.php', (_req, res) => res.status(404).type('text').send('Not found'));
 app.use(express.static(PUBLIC_DIR, {
   maxAge: '1h',
   index: false,
